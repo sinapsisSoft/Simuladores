@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Theme Made By www.w3schools.com - No Copyright -->
+<title>Coominobras</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Web portal company computer systems and accountants.">
+<meta name="distribution" content="global"/>
+<meta name="Keywords" content="contabilidad,software,desarrollo,sistemas"/>
+<meta name="Robots" content="all"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet">
+<link href="css/responsive.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="application/javascript" src="js/function.js"></script>
+
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+<!-- Container (About Section) -->
+<div id="home" >
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        <a class="navbar-brand" href="#myPage">
+        <h1><img class="img-responsive" src="images/logo.png" alt="logo"></h1>
+        </a> </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="scroll active"><a href="#home">Inicio</a></li>
+          <li><a href="#services">Líneas de Crédito</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="jumbotron text-center">
+    <h1>Coominobras</h1>
+    <p>¡Primero el asociado!</p>
+  </div>
+</div>
+<!-- Container (Services Section) -->
+<section id="services" class="container-fluid">
+  <div class="text-center">
+    <h2>Líneas de Crédito</h2>
+    <h4>Ven y conoce todos nuestros servicios diseñados para tí.</h4>
+  </div>
+  <div id="alert">
+    <div class="alert alert-danger alert-dismissable textAlert" ></div>
+  </div>
+  <div class="row slideanim">
+    <div id="contInfo0" class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+      <div class="panel panel-default text-left cardInfo">
+        <div class="panel-heading">
+          <h3 id="titleLine">Línea de crédito: <strong> </strong></h3>
+        </div>
+        <div class="panel-body">
+          <div id="destination">
+            <p> </p>
+          </div>
+          <b>Condiciones especiales:</b><br>
+          <div id="condition">
+            <p> </p>
+          </div>
+          <b>Beneficios:</b><br>
+          <div id="benefit">
+            <p> </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="contInfo1" class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+      <div class="panel panel-default text-left cardInfo">
+        <div class="panel-heading">
+          <h3>Nuestros servicios :<strong> Coominobras</strong></h3>
+        </div>
+        <div class="panel-body">
+          <p> Ponemos a tu alcance el nuevo servicio de simuladores de crédito, el cual busca ayudarte para que conozcas el costo de tu crédito, la tasa y plazo del financiamiento. <br>
+            <br>
+            *Para más información comunícate con uno de nuestros asesores. </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="panel panel-default text-center">
+        <div class="panel-heading">
+          <h3>Simulador</h3>
+        </div>
+        <div class="panel-body card">
+          <form class="form-inline form-simulator">
+            <div class="row">
+              <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <label for="loanTerm">Líneas de crédito</label>
+                <select class="form-control"  id="selectLineCredit"  onChange="selectItems(this.value)"></select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <label for="loanTerm">Plazo en meses</label>
+                <select class="form-control" id="selectWeek">
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <label for="loanTerm">Digita el valor a solicitar </label>
+            </div>
+            <div class="row">
+              <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <div class="input-group"> <span class="input-group-addon">$</span>
+                  <input class="form-control" type="text"  id="rode" onKeyUp="validateText(this.id)"  maxlength="11" placeholder="0.00" enable="false"  disabled >
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="panel-footer">
+          <button class="btn btn-lg" id="btn_simulator" onclick="calculate(event)"  >Calcular</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Container (Table result)--> 
+  
+</section>
+
+<!-- Container (Contact Section) -->
+
+<div class="container-fluid center ContainerTableResult"> <a id="result"></a>
+  <div id="alertTable">
+    <div class="alert alert-warning alert-dismissable textAlert"> </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 detail"> </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 table-responsive">
+      <h3>Tabla de amortización</h3>
+      <table id="tableResult" class="table table-hover">
+      </table>
+    </div>
+  </div>
+</div>
+<footer class="container-fluid text-center"> <a href="#myPage" title="To Top"> <span class="glyphicon glyphicon-chevron-up"></span> </a>
+  <p> <a href="https://www.sinapsissoft.com/" target="_blank" title="Visit w3schools">Copyright &copy; 2017 Sinapsis Soft.</a></p>
+</footer>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Información!</h4>
+      </div>
+      <div class="modal-body">
+        <p> Los valores presentados en el simulador de crédito son aproximados y pueden generar variación al momento que realice la solicitud. </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$(document).ready(function(){
+	
+  // Add smooth scrolling to all links in navbar + footer link
+  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 900, function(){
+   
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+  $(window).scroll(function() {
+    $(".slideanim").each(function(){
+      var pos = $(this).offset().top;
+
+      var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+    });
+  });
+ 
+ $("#contInfo0").css("display","none");
+	
+ 	obj="select=select&dataSearch="+"";
+	 getDataSimulators(0);
+	obj="selectCondition=selectCondition";
+ 	getDataSimulators(1);
+});
+</script>
+</body>
+</html>

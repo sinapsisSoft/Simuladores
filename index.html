@@ -62,8 +62,7 @@
           <div class="col-sm gutters-19">
             <div class="form-group">
               <div class="form-select-custom">
-                <select id="credit-line" onChange="selectItems(this.value)">
-                  
+                <select id="credit-line" onChange="selectItems(this.value)">                  
                 </select>                
               </div>
             </div>
@@ -96,7 +95,7 @@
     <section class="credit">
       <div class="container">
         <div class="row align-items-center">
-          <div id="contInfo0" class="col-lg-12">
+          <div id="contInfo0" class="col-lg-8">
             <div class="credit-content">
               <h2 class="mb-4" id="titleLine"><span class="d-block">Título línea de crédito</span></h2>
               <div class="panel-body">
@@ -116,8 +115,8 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div id="contInfo1" class="col-lg-12">
+          </div>          
+          <div id="contInfo1" class="col-lg-8">
             <div class="credit-content">
               <h2 class="mb-4" id="titleLine"><span class="d-block">Nuestros servicios: Coominobras</span></h2>
               <div class="panel-body">
@@ -126,6 +125,11 @@
                   <br>
                   *Para más información comunícate con uno de nuestros asesores. </p>
               </div>
+            </div>
+          </div>
+          <div id="contInfo2" class="col-lg-4 detail">
+            <div class="credit-content">
+              Detalle credito
             </div>
           </div>
         </div>
@@ -143,44 +147,10 @@
           <div class="col-md-12 col-lg-12 mb-12 mb-lg-12">
             <div class="card card-special">
               <table id="tableResult" class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>Períodos</th>
-                    <th>Cuota</th>
-                    <th>Interés</th>
-                    <th>Abono a Capital</th>
-                    <th>Saldo</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td> $4.074.800</td>
-                    <td> $74.800</td>
-                    <td> $4.000.000</td>
-                    <td> $0</td>
-                  </tr>
-                  <tr>
-                      <td>1</td>
-                      <td> $4.074.800</td>
-                      <td> $74.800</td>
-                      <td> $4.000.000</td>
-                      <td> $0</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                  <tr class="success">
-                    <td>Totales</td>
-                    <td>$4.074.800</td>
-                    <td> $74.800</td>
-                    <td> $4.000.000</td>
-                    <td></td>
-                  </tr>
-                </tfoot>
-              </table>
+              </table>              
             </div>
           </div>
-        </div>
+        </div>        
       </div>
     </section>
       <!-- ================ Credit table section end ================= --> 
@@ -214,6 +184,8 @@
   <script>
 
     $("#contInfo0").css("display", "none");
+    $("#contInfo2").css("display", "none");
+    $("#result").css("display", "none");
 
     $(document).ready(function () {
       obj = "select=select";

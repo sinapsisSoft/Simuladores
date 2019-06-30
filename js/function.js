@@ -27,7 +27,7 @@ function getDataSimulators(data) {
 				createElementList();
 			} else if (data === 1) {
 				objCondition = JSON.parse(xhttp.responseText);
-				console.log(objCondition);
+				//console.log(objCondition);
 			}
 		} else {
 		}
@@ -57,7 +57,7 @@ function selectItems(data) {
 	if (data != 0) {
 		dataRode = document.getElementById("rode");
     var maxMin = sectionMaxMin(data);
-    console.log(maxMin);
+    //console.log(maxMin);
 		for (var i = 0; i < objCredit.length; i++) {
 			if (objCredit[i].Sim_id === data) {
         //alert();
@@ -69,7 +69,7 @@ function selectItems(data) {
 				document.getElementById("titleLine").innerHTML = "<span class='d-block'>"+ titleLine +"</span>";
 				cleanElementsNewline();
 				createSelect(maxMin[1], maxMin[0]);
-				validaSection(0);
+        validaSection(0);        
 			}
 		}
 	} else {
@@ -188,14 +188,14 @@ function calculate(e) {
 	varEvent = e;
 	selectWeek = document.getElementById("term");
 	if (itemSelectLine == 0) {
-		alerts(0, "#alert");
+		alerts(0, "#alertTable");
 		return false;
 	}
 	if (selectWeek) {
 		var selectItemsWeek = selectList.options[selectList.selectedIndex].value;
 		if (selectItemsWeek == 0) {
 
-			alerts(1, "#alert");
+			alerts(1, "#alertTable");
 			validate(selectWeek, 1);
 			return false;
 		} else {
@@ -209,7 +209,7 @@ function calculate(e) {
 
 		if (dataRode.value === null || dataRode.value === "" || dataRode.value.length === 0) {
 
-			alerts(2, "#alert");
+			alerts(2, "#alertTable");
 			validate(dataRode, 1);
 			return false;
 		} else {
@@ -217,7 +217,7 @@ function calculate(e) {
 			//console.log(text.length);
 			if (text.length < 6) {
 
-				alerts(3, "#alert");
+				alerts(3, "#alertTable");
 
 				cleanTable();
 				validate(dataRode, 1);
@@ -226,7 +226,8 @@ function calculate(e) {
 				validate(dataRode, 0);
 
 				createTableAmortization("tableResult", selectItemsWeek, dataRate, text);
-				$(".ContainerTableResult").fadeIn();
+        $(".ContainerTableResult").fadeIn();
+        $("#contInfo2").fadeIn(1000);
 				//anchor(e, "#result");
 				document.location.href = "#result";
 			}
@@ -246,10 +247,7 @@ function createTableAmortization(idTable, term, rate, rode) {
 	var balances = [3];
 	var previousBalance = rode;
 	var operation = (Math.pow((1 + rate), term) * rate) / ((Math.pow((1 + rate), term) - 1));
-  var ressult = rode * (operation);
-  console.log(headerTable);
-  console.log(operation);
-  console.log(ressult);
+  var ressult = rode * (operation);  
 
 	for (var i = 1; i <= term; i++) {
 		var interest = previousBalance * rate;
@@ -264,30 +262,30 @@ function createTableAmortization(idTable, term, rate, rode) {
 			balances[0] = ressult;
 			balances[1] = interest;
 			balances[2] = deposit;
-
+      alert("i === 1");
 		} else {
-
 			balances[0] = ressult + balances[0];
 			balances[1] = interest + balances[1];
-			balances[2] = deposit + balances[2];
+      balances[2] = deposit + balances[2];
+      alert("else");
 		}
-
 	}
 	footer += "<tfoot><tr class='success'><td >Totales</td><td>$" + numberWithCommas(balances[0].toFixed(0)) + "</td><td> $" + numberWithCommas(balances[1].toFixed(0)) + "</td><td> $" + numberWithCommas(balances[2].toFixed(0)) + "</td></tr></tfoot>";
 	newTable = headerTable + bodyTable + row + "</tbody>" + footer;
 	table.innerHTML = newTable;
-	//var titleLine = "Diego";
 	rate = parseFloat(rate * 100).toFixed(2);
 
-	var textInfo = "<ul class='address listInfoTable'><li><i class='fa fa-map-marker'></i> <span><b> Línea de crédito: </b></span> " + titleLine + " </li><li><i class='fa fa-map-marker'></i> <span> <b>Plazo:</b></span> " + term + " Meses </li><li><i class='fa fa-phone'></i> <span> <b>Tasa de Interés:</b></span> " + rate + " %</li><li><i class='fa fa-phone'></i> <span> <b>Valor de la cuota aproximado :</b></span> $" + numberWithCommas(ressult.toFixed(0)) + "</li><li><i class='fa fa-envelope'></i> <span><b> Valor Solicitado:</b></span> $" + numberWithCommas(rode) + "</li></ul>";
+	var textInfo = "<ul class='listInfoTable'><li><span><b> Línea de crédito: </b></span> " + titleLine + " </li><li><i class='fa fa-map-marker'></i> <span> <b>Plazo:</b></span> " + term + " Meses </li><li><i class='fa fa-phone'></i> <span> <b>Tasa de Interés:</b></span> " + rate + " %</li><li><i class='fa fa-phone'></i> <span> <b>Valor de la cuota aproximado :</b></span> $" + numberWithCommas(ressult.toFixed(0)) + "</li><li><i class='fa fa-envelope'></i> <span><b> Valor Solicitado:</b></span> $" + numberWithCommas(rode) + "</li></ul>";
 
 
 	alerts(4, "#alertTable");
-	$(".listInfoTable").remove();
+	//$(".listInfoTable").remove();
 	$(".detail").html(textInfo);
-	$("#myModal").modal();
-
-
+  //$("#myModal").modal();
+  alert(headerTable);
+  alert(operation);
+  alert(ressult);
+  alert(rate);
 }
 
 function numberWithCommas(x) {
@@ -330,7 +328,7 @@ function cleanTable() {
 
 function validaSection(data) {
 	$("#contInfo0").css("display", "none");
-	$("#contInfo1").css("display", "none");
+  $("#contInfo1").css("display", "none");  
 	$("#contInfo" + data).fadeIn(1000);
 }
 

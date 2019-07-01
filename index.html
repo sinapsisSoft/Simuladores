@@ -55,7 +55,7 @@
   
 
     <!-- ================ start banner form ================= --> 
-    <form class="form-search form-search-position">
+    <form class="form-search form-search-position"  >
       <div class="container">
         <div class="row title-3"> Simulador de crédito </div>
         <div class="row">
@@ -72,6 +72,7 @@
               <div class="form-select-custom">
                 <select name="term" id="term">
                   <option value="" disabled selected>Plazo meses</option>
+                  
                 </select>
               </div>
             </div>
@@ -147,6 +148,7 @@
           <div class="col-md-12 col-lg-12 mb-12 mb-lg-12">
             <div class="card card-special">
               <table id="tableResult" class="table table-hover">
+
               </table>              
             </div>
           </div>
@@ -183,9 +185,7 @@
 
   <script>
 
-    $("#contInfo0").css("display", "none");
-    $("#contInfo2").css("display", "none");
-    $("#result").css("display", "none");
+  
 
     $(document).ready(function () {
       obj = "select=select";

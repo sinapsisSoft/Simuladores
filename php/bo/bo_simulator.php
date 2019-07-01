@@ -33,7 +33,8 @@ class BoSimulator
   #Description : Function for show all simulators
   function selectSimulators(){
     try {        
-      echo $this->objDao->selectSimulators();    
+     echo $this->objDao->selectSimulators();   
+      
     }
     catch(Exception $e){
       echo 'Exception captured: ', $e->getMessage(), "\n";
@@ -84,18 +85,13 @@ class BoSimulator
   }
 
 }
-
+$obj = new BoSimulator();
 if(isset ($_POST['select'])){
-  $obj = new BoSimulator();
+
   $obj->selectSimulators();
 } else if (isset ($_POST['selectCondition'])){
-  $obj = new BoSimulator();
+
   $obj->selectConditions();
 }
-//$obj=new BoSimulator();
-//echo $obj->newSimulator("Credito Prueba 2","Texto ",7,12,2.1);
-//$obj->selectSimulators();
-//$obj->selectSimulator(1);
-//$obj->selectCondition(1);
-//$obj->updateSimulator(2,"Credito Vivienda","Descripcion");
+
 ?>

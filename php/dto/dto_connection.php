@@ -10,8 +10,8 @@
 
     function __construct(){ 
         $this->user="root";
-        $this->password="*";
-        $this->server="localhost";
+        $this->password="";
+        $this->server="127.0.0.1";
         $this->database="u645747626_sm";
         }
         public function getUser()

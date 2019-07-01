@@ -14,16 +14,16 @@ var obj;
 var arrayTerm;
 //Function get data data base
 function getDataSimulators(data) {
- 
-  //console.log(obj);
-  var xhttp = new XMLHttpRequest();  
+
+	//console.log(obj);
+	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST", "php/bo/bo_simulator.php", true);
-  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4 && this.status === 200) {
 			if (data === 0) {
 				objCredit = JSON.parse(xhttp.responseText);
-				//console.log(objCredit);
+				//console.log(xhttp.responseText);
 				createElementList();
 			} else if (data === 1) {
 				objCondition = JSON.parse(xhttp.responseText);
@@ -31,23 +31,23 @@ function getDataSimulators(data) {
 			}
 		} else {
 		}
-  };
-  
+	};
+
 	xhttp.send(obj);
 }
 //Function  create  list select  option 
 function createElementList() {
 	var selectCredit = document.getElementById("credit-line");
-  var option = "<option value='0'>Seleccione crédito</option>";
-  let aux=document.getElementsByClassName("nice-select")[0];
-  let option2='<span class="current">Seleccione crédito</span><ul class="list"><li data-value="0" class="option selected focus">Seleccione crédito</li>';
+	var option = "<option value='0'>Seleccione crédito</option>";
+	let aux = document.getElementsByClassName("nice-select")[0];
+	let option2 = '<span class="current">Seleccione crédito</span><ul class="list"><li data-value="0" class="option selected focus">Seleccione crédito</li>';
 	for (var i = 0; i < objCredit.length; i++) {
-    option += "<option value='" + objCredit[i].Sim_id + "'>" + objCredit[i].Sim_name + "</option>";
-    option2+='<li data-value="'+objCredit[i].Sim_id +'" class="option">'+ objCredit[i].Sim_name + '</li>';    
-  }
-  option2+='</ul>';
-  selectCredit.innerHTML = option;
-  aux.innerHTML = option2;
+		option += "<option value='" + objCredit[i].Sim_id + "'>" + objCredit[i].Sim_name + "</option>";
+		option2 += '<li data-value="' + objCredit[i].Sim_id + '" class="option">' + objCredit[i].Sim_name + '</li>';
+	}
+	option2 += '</ul>';
+	selectCredit.innerHTML = option;
+	aux.innerHTML = option2;
 
 }
 //Function select list credit line
@@ -56,20 +56,20 @@ function selectItems(data) {
 	//console.log(data);
 	if (data != 0) {
 		dataRode = document.getElementById("rode");
-    var maxMin = sectionMaxMin(data);
-    //console.log(maxMin);
+		var maxMin = sectionMaxMin(data);
+		//console.log(maxMin);
 		for (var i = 0; i < objCredit.length; i++) {
 			if (objCredit[i].Sim_id === data) {
-        //alert();
-        document.getElementById('description').innerHTML = "<p>" + objCredit[i].Sim_description + "</p>";
+				//alert();
+				document.getElementById('description').innerHTML = "<p>" + objCredit[i].Sim_description + "</p>";
 				document.getElementById('destination').innerHTML = "<p>" + objCredit[i].Sim_destination + "</p>";
 				document.getElementById('conditions').innerHTML = "<p>" + objCredit[i].Sim_conditions + "</p>";
 				document.getElementById('benefits').innerHTML = "<p>" + objCredit[i].Sim_benefits + "</p>";
 				titleLine = objCredit[i].Sim_name;
-				document.getElementById("titleLine").innerHTML = "<span class='d-block'>"+ titleLine +"</span>";
+				document.getElementById("titleLine").innerHTML = "<span class='d-block'>" + titleLine + "</span>";
 				cleanElementsNewline();
 				createSelect(maxMin[1], maxMin[0]);
-        validaSection(0);        
+				validaSection(0);
 			}
 		}
 	} else {
@@ -86,14 +86,14 @@ function sectionMaxMin(data) {
 			arrayTerm.push(objCondition[i]);
 		}
 	}
-  
+
 	for (var j = 0; j < arrayTerm.length; j++) {
-    arrayMaxMin[0] = arrayTerm[j].Cond_initial;
-    arrayMaxMin[1] = arrayTerm[j].Cond_final;
+		arrayMaxMin[0] = arrayTerm[j].Cond_initial;
+		arrayMaxMin[1] = arrayTerm[j].Cond_final;
 		if (j === 0) {
 			aux[0] = parseInt(arrayMaxMin[0]);
 			aux[1] = parseInt(arrayMaxMin[1]);
-		} else {			
+		} else {
 			if (parseInt(arrayMaxMin[1]) > aux[1]) {
 				aux[1] = parseInt(arrayMaxMin[1]);
 			}
@@ -108,26 +108,26 @@ function sectionMaxMin(data) {
 //Function create select week
 function createSelect(max, mini) {
 	selectList = document.getElementById("term");
-  var option = "<option value='0'>Número de cuotas</option>";
-  let aux=document.getElementsByClassName("nice-select")[1];
-  let option2='<span class="current">Número de cuotas</span><ul class="list"><li data-value="0" class="option selected focus">Número de cuotas</li>';
+	var option = "<option value='0'>Número de cuotas</option>";
+	let aux = document.getElementsByClassName("nice-select")[1];
+	let option2 = '<span class="current">Número de cuotas</span><ul class="list"><li data-value="0" class="option selected focus">Número de cuotas</li>';
 	for (var i = mini - 1; i <= max; i++) {
 		if (i != 0) {
-      option += "<option value='" + i + "'>" + i + "</option>";
-      option2+='<li data-value="'+ i +'" class="option">'+ i + '</li>'; 
+			option += "<option value='" + i + "'>" + i + "</option>";
+			option2 += '<li data-value="' + i + '" class="option">' + i + '</li>';
 		}
-  }
-  option2+='</ul>';
-  selectList.innerHTML = option;
-  aux.innerHTML = option2;
+	}
+	option2 += '</ul>';
+	selectList.innerHTML = option;
+	aux.innerHTML = option2;
 }
 //Function get rate and nmv
 function selectRate(select) {
 	var rate;
 	var aMaxMin = new Array();
 	for (var i = 0; i < arrayTerm.length; i++) {
-    aMaxMin[0] = arrayTerm[i].Cond_initial;
-    aMaxMin[1] = arrayTerm[i].Cond_final;
+		aMaxMin[0] = arrayTerm[i].Cond_initial;
+		aMaxMin[1] = arrayTerm[i].Cond_final;
 		//console.log(aMaxMin);
 		if ((select >= parseInt(aMaxMin[0])) && (select <= parseInt(aMaxMin[1]))) {
 			rate = arrayTerm[i].Cond_percent;
@@ -184,55 +184,10 @@ function validateText(id) {
 }
 //Function calculate
 function calculate(e) {
-	var dataRate = 1;
-	varEvent = e;
-	selectWeek = document.getElementById("term");
-	if (itemSelectLine == 0) {
-		alerts(0, "#alertTable");
-		return false;
-	}
-	if (selectWeek) {
-		var selectItemsWeek = selectList.options[selectList.selectedIndex].value;
-		if (selectItemsWeek == 0) {
+	
 
-			alerts(1, "#alertTable");
-			validate(selectWeek, 1);
-			return false;
-		} else {
-			//validateRate(objTermData.data[itemSelectLine],selectItemsWeek);
-			dataRate = selectRate(selectItemsWeek);
-			//console.log(selectItemsWeek);
-			//alert(dataRate);
-			validate(selectWeek, 0);
-
-		}
-
-		if (dataRode.value === null || dataRode.value === "" || dataRode.value.length === 0) {
-
-			alerts(2, "#alertTable");
-			validate(dataRode, 1);
-			return false;
-		} else {
-			var text = dataRode.value.replace(/\./g, "");
-			//console.log(text.length);
-			if (text.length < 6) {
-
-				alerts(3, "#alertTable");
-
-				cleanTable();
-				validate(dataRode, 1);
-				return false;
-			} else {
-				validate(dataRode, 0);
-
-				createTableAmortization("tableResult", selectItemsWeek, dataRate, text);
-        $(".ContainerTableResult").fadeIn();
-        $("#contInfo2").fadeIn(1000);
-				//anchor(e, "#result");
-				document.location.href = "#result";
-			}
-		}
-	}
+	e.preventDefault();
+	
 }
 //Function create table result
 function createTableAmortization(idTable, term, rate, rode) {
@@ -247,7 +202,7 @@ function createTableAmortization(idTable, term, rate, rode) {
 	var balances = [3];
 	var previousBalance = rode;
 	var operation = (Math.pow((1 + rate), term) * rate) / ((Math.pow((1 + rate), term) - 1));
-  var ressult = rode * (operation);  
+	var ressult = rode * (operation);
 
 	for (var i = 1; i <= term; i++) {
 		var interest = previousBalance * rate;
@@ -262,12 +217,12 @@ function createTableAmortization(idTable, term, rate, rode) {
 			balances[0] = ressult;
 			balances[1] = interest;
 			balances[2] = deposit;
-      alert("i === 1");
+			//alert("i === 1");
 		} else {
 			balances[0] = ressult + balances[0];
 			balances[1] = interest + balances[1];
-      balances[2] = deposit + balances[2];
-      alert("else");
+			balances[2] = deposit + balances[2];
+			//alert("else");
 		}
 	}
 	footer += "<tfoot><tr class='success'><td >Totales</td><td>$" + numberWithCommas(balances[0].toFixed(0)) + "</td><td> $" + numberWithCommas(balances[1].toFixed(0)) + "</td><td> $" + numberWithCommas(balances[2].toFixed(0)) + "</td></tr></tfoot>";
@@ -278,14 +233,9 @@ function createTableAmortization(idTable, term, rate, rode) {
 	var textInfo = "<ul class='listInfoTable'><li><span><b> Línea de crédito: </b></span> " + titleLine + " </li><li><i class='fa fa-map-marker'></i> <span> <b>Plazo:</b></span> " + term + " Meses </li><li><i class='fa fa-phone'></i> <span> <b>Tasa de Interés:</b></span> " + rate + " %</li><li><i class='fa fa-phone'></i> <span> <b>Valor de la cuota aproximado :</b></span> $" + numberWithCommas(ressult.toFixed(0)) + "</li><li><i class='fa fa-envelope'></i> <span><b> Valor Solicitado:</b></span> $" + numberWithCommas(rode) + "</li></ul>";
 
 
-	alerts(4, "#alertTable");
-	//$(".listInfoTable").remove();
+	
 	$(".detail").html(textInfo);
-  //$("#myModal").modal();
-  alert(headerTable);
-  alert(operation);
-  alert(ressult);
-  alert(rate);
+
 }
 
 function numberWithCommas(x) {
@@ -328,7 +278,7 @@ function cleanTable() {
 
 function validaSection(data) {
 	$("#contInfo0").css("display", "none");
-  $("#contInfo1").css("display", "none");  
+	$("#contInfo1").css("display", "none");
 	$("#contInfo" + data).fadeIn(1000);
 }
 

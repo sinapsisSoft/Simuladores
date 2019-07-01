@@ -30,78 +30,78 @@ DELIMITER $$
 -- Procedimientos
 --
 DROP PROCEDURE IF EXISTS `sp_cond_insert`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_cond_insert` (IN `initial` INT, IN `final` INT, IN `percent` DECIMAL(4,2), IN `Simul` INT)  BEGIN 
+CREATE PROCEDURE `sp_cond_insert` (IN `initial` INT, IN `final` INT, IN `percent` DECIMAL(4,2), IN `Simul` INT)  BEGIN 
 INSERT INTO conditions(Cond_initial, Cond_final, Cond_percent, Sim_id) VALUES (initial,final,percent,Simul); 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_cond_select_all`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_cond_select_all` ()  BEGIN 
+CREATE PROCEDURE `sp_cond_select_all` ()  BEGIN 
 SELECT Cond_id, Cond_initial, Cond_final, Cond_percent, Sim_id FROM conditions;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_cond_select_simu`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_cond_select_simu` (IN `simul` INT)  BEGIN 
+CREATE PROCEDURE `sp_cond_select_simu` (IN `simul` INT)  BEGIN 
 SELECT Cond_id, Cond_initial, Cond_final, Cond_percent, Sim_id FROM conditions WHERE Sim_id = simul;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_cond_update`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_cond_update` (IN `id` INT, IN `initial` INT, IN `final` INT, IN `percent` DECIMAL(4,2), IN `simul` INT)  BEGIN 
+CREATE PROCEDURE `sp_cond_update` (IN `id` INT, IN `initial` INT, IN `final` INT, IN `percent` DECIMAL(4,2), IN `simul` INT)  BEGIN 
 UPDATE conditions SET Cond_initial=initial,Cond_final=final,Cond_percent=percent,Sim_id=simul WHERE Cond_id = id;
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_depart_insert`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_depart_insert` (IN `name` VARCHAR(100))  BEGIN 
+CREATE PROCEDURE `sp_depart_insert` (IN `name` VARCHAR(100))  BEGIN 
 INSERT INTO department(Dep_name) VALUES (name); 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_depart_select_all`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_depart_select_all` ()  BEGIN 
+CREATE PROCEDURE `sp_depart_select_all` ()  BEGIN 
 SELECT Dep_id, Dep_name FROM department;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_depart_select_one`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_depart_select_one` (IN `id` INT)  BEGIN 
+CREATE PROCEDURE `sp_depart_select_one` (IN `id` INT)  BEGIN 
 SELECT Dep_id, Dep_name FROM department WHERE Dep_id = id;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_depart_update`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_depart_update` (IN `id` INT, IN `name` VARCHAR(100))  BEGIN 
+CREATE PROCEDURE `sp_depart_update` (IN `id` INT, IN `name` VARCHAR(100))  BEGIN 
 UPDATE department SET Dep_name=name WHERE Dep_id = id;
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_entry_insert`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_entry_insert` (IN `login` INT, IN `status` INT)  BEGIN 
+CREATE PROCEDURE `sp_entry_insert` (IN `login` INT, IN `status` INT)  BEGIN 
 INSERT INTO entry(Login_id, Stat_id) VALUES (login,status); 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_entry_select_all`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_entry_select_all` ()  BEGIN 
+CREATE PROCEDURE `sp_entry_select_all` ()  BEGIN 
 SELECT Ent_id, Login_id, Stat_id FROM entry;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_entry_select_login`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_entry_select_login` (IN `login` INT)  BEGIN 
+CREATE PROCEDURE `sp_entry_select_login` (IN `login` INT)  BEGIN 
 SELECT Ent_id, Login_id, Stat_id FROM entry WHERE Login_id = login;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_entry_select_status`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_entry_select_status` (IN `status` INT)  BEGIN 
+CREATE PROCEDURE `sp_entry_select_status` (IN `status` INT)  BEGIN 
 SELECT Ent_id, Login_id, Stat_id FROM entry WHERE Stat_id = status;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_entry_update`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_entry_update` (IN `id` INT, IN `login` INT, IN `status` INT)  BEGIN 
+CREATE PROCEDURE `sp_entry_update` (IN `id` INT, IN `login` INT, IN `status` INT)  BEGIN 
 UPDATE entry SET Login_id=login, Stat_id=status WHERE Ent_id = id;
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_login`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_login` (IN `email` VARCHAR(200), IN `pass` VARCHAR(30))  BEGIN 
+CREATE PROCEDURE `sp_login` (IN `email` VARCHAR(200), IN `pass` VARCHAR(30))  BEGIN 
 SET @mail = '';
 SET @password = '';
 #Verify if the email exists
@@ -121,30 +121,30 @@ END IF;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_login_insert`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_login_insert` (IN `pass` VARCHAR(30), IN `user` INT)  BEGIN 
+CREATE PROCEDURE `sp_login_insert` (IN `pass` VARCHAR(30), IN `user` INT)  BEGIN 
 INSERT INTO login(Login_password, User_id) VALUES (pass,user);
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_login_select_all`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_login_select_all` ()  BEGIN 
+CREATE PROCEDURE `sp_login_select_all` ()  BEGIN 
 SELECT Login_id, Login_password, User_id FROM login;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_login_select_one`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_login_select_one` (IN `id` INT)  BEGIN 
+CREATE PROCEDURE `sp_login_select_one` (IN `id` INT)  BEGIN 
 SELECT Login_id, Login_password, User_id FROM login WHERE Login_id = id;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_login_update`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_login_update` (IN `mail` VARCHAR(200), IN `pass` VARCHAR(30))  BEGIN 
+CREATE PROCEDURE `sp_login_update` (IN `mail` VARCHAR(200), IN `pass` VARCHAR(30))  BEGIN 
 SET @user_id = (SELECT User_id FROM users WHERE User_email LIKE mail); 
 UPDATE login SET Login_password=pass WHERE User_id = @user_id; 
 SELECT ROW_COUNT();
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_simul_insert`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_simul_insert` (IN `name` VARCHAR(80), IN `descrip` VARCHAR(200), IN `initial` INT, IN `final` INT, IN `percent` DECIMAL(4,2))  BEGIN 
+CREATE PROCEDURE `sp_simul_insert` (IN `name` VARCHAR(80), IN `descrip` VARCHAR(200), IN `initial` INT, IN `final` INT, IN `percent` DECIMAL(4,2))  BEGIN 
 INSERT INTO simulators(Sim_name, Sim_description) VALUES (name,descrip); 
 SET @id = LAST_INSERT_ID(); 
 INSERT INTO conditions(Cond_initial,Cond_final,Cond_percent,Sim_id) VALUES (initial,final,percent,@id);
@@ -152,99 +152,99 @@ SELECT ROW_COUNT();
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_simul_select_all`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_simul_select_all` ()  BEGIN 
+CREATE PROCEDURE `sp_simul_select_all` ()  BEGIN 
 SELECT * FROM simulators;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_simul_select_one`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_simul_select_one` (IN `id` INT)  BEGIN 
+CREATE PROCEDURE `sp_simul_select_one` (IN `id` INT)  BEGIN 
 SELECT Sim_id, Sim_name, Sim_description, Sim_conditions, Sim_benefits FROM simulators WHERE Sim_id = id;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_simul_update`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_simul_update` (IN `id` INT, IN `name` VARCHAR(80), IN `descrip` VARCHAR(200))  BEGIN 
+CREATE PROCEDURE `sp_simul_update` (IN `id` INT, IN `name` VARCHAR(80), IN `descrip` VARCHAR(200))  BEGIN 
 UPDATE simulators SET Sim_name=name,Sim_description=descrip WHERE Sim_id = id;
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_stattype_insert`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_stattype_insert` (IN `name` VARCHAR(30))  BEGIN 
+CREATE PROCEDURE `sp_stattype_insert` (IN `name` VARCHAR(30))  BEGIN 
 INSERT INTO status_type(Type_name) VALUES (name); 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_stattype_select_all`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_stattype_select_all` ()  BEGIN 
+CREATE PROCEDURE `sp_stattype_select_all` ()  BEGIN 
 SELECT Type_id, Type_name FROM status_type;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_stattype_select_one`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_stattype_select_one` (IN `id` INT)  BEGIN 
+CREATE PROCEDURE `sp_stattype_select_one` (IN `id` INT)  BEGIN 
 SELECT Type_id, Type_name FROM status_type WHERE Type_id = id;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_stattype_update`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_stattype_update` (IN `id` INT, IN `name` VARCHAR(30))  BEGIN 
+CREATE PROCEDURE `sp_stattype_update` (IN `id` INT, IN `name` VARCHAR(30))  BEGIN 
 UPDATE status_type SET Type_name=name WHERE Type_id = id; 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_status_insert`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_status_insert` (IN `name` VARCHAR(30), IN `type` INT)  BEGIN 
+CREATE PROCEDURE `sp_status_insert` (IN `name` VARCHAR(30), IN `type` INT)  BEGIN 
 INSERT INTO status(Stat_name, Type_id) VALUES (name, type); 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_status_select_all`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_status_select_all` ()  BEGIN 
+CREATE PROCEDURE `sp_status_select_all` ()  BEGIN 
 SELECT Stat_id, Stat_name, Type_id FROM status;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_status_select_one`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_status_select_one` (IN `id` INT)  BEGIN 
+CREATE PROCEDURE `sp_status_select_one` (IN `id` INT)  BEGIN 
 SELECT Stat_id, Stat_name, Type_id FROM status WHERE Stat_id = id;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_status_select_type`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_status_select_type` (IN `type` INT)  BEGIN 
+CREATE PROCEDURE `sp_status_select_type` (IN `type` INT)  BEGIN 
 SELECT Stat_id, Stat_name, Type_id FROM status WHERE Type_id = type;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_status_update`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_status_update` (IN `id` INT, IN `name` VARCHAR(30), IN `type` INT)  BEGIN 
+CREATE PROCEDURE `sp_status_update` (IN `id` INT, IN `name` VARCHAR(30), IN `type` INT)  BEGIN 
 UPDATE status SET Stat_name=name, Type_id = type WHERE Stat_id = id; 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_town_insert`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_town_insert` (IN `name` VARCHAR(100), IN `depart` INT)  BEGIN 
+CREATE PROCEDURE `sp_town_insert` (IN `name` VARCHAR(100), IN `depart` INT)  BEGIN 
 INSERT INTO township(Town_name, Dep_id) VALUES (name, depart); 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_town_select_all`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_town_select_all` ()  BEGIN 
+CREATE PROCEDURE `sp_town_select_all` ()  BEGIN 
 SELECT Town_id, Town_name, Dep_id FROM township;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_town_select_Dep`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_town_select_Dep` (IN `dept` INT)  BEGIN 
+CREATE PROCEDURE `sp_town_select_Dep` (IN `dept` INT)  BEGIN 
 SELECT Town_id, Town_name, Dep_id FROM township WHERE Dep_id = dept;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_town_select_one`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_town_select_one` (IN `id` INT)  BEGIN 
+CREATE PROCEDURE `sp_town_select_one` (IN `id` INT)  BEGIN 
 SELECT Town_id, Town_name, Dep_id FROM township WHERE Town_id = id;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_town_update`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_town_update` (IN `id` INT, IN `name` VARCHAR(100), IN `depart` INT)  BEGIN 
+CREATE PROCEDURE `sp_town_update` (IN `id` INT, IN `name` VARCHAR(100), IN `depart` INT)  BEGIN 
 UPDATE township SET Town_name=name,Dep_id=depart WHERE Town_id = id;
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_user_insert`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_user_insert` (IN `name` VARCHAR(80), IN `identification` INT, IN `email` VARCHAR(200), IN `status` INT, IN `pass` VARCHAR(30))  BEGIN 
+CREATE PROCEDURE `sp_user_insert` (IN `name` VARCHAR(80), IN `identification` INT, IN `email` VARCHAR(200), IN `status` INT, IN `pass` VARCHAR(30))  BEGIN 
 SET @exist = (SELECT COUNT(User_email)FROM users WHERE User_email LIKE email); 
 IF @exist = 0 THEN 
 INSERT INTO users (User_name, User_identification, User_email, Stat_id) VALUES (name, identification, email, status); 
@@ -255,17 +255,17 @@ SELECT ROW_COUNT();
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_user_select_all`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_user_select_all` ()  BEGIN 
+CREATE PROCEDURE `sp_user_select_all` ()  BEGIN 
 SELECT User_id, User_name, User_identification, User_email, Stat_id FROM users; 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_user_select_one`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_user_select_one` (IN `mail` VARCHAR(200))  BEGIN 
+CREATE PROCEDURE `sp_user_select_one` (IN `mail` VARCHAR(200))  BEGIN 
 SELECT User_id, User_name, User_identification, User_email, Stat_id FROM users WHERE User_email = mail; 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_user_update`$$
-CREATE DEFINER=`u645747626_st`@`10.1.2.54` PROCEDURE `sp_user_update` (IN `id` INT, IN `name` VARCHAR(80), IN `status` INT)  BEGIN 
+CREATE PROCEDURE `sp_user_update` (IN `id` INT, IN `name` VARCHAR(80), IN `status` INT)  BEGIN 
 UPDATE users SET User_name=name, Stat_id = status WHERE User_id = id; 
 SELECT ROW_COUNT(); 
 END$$

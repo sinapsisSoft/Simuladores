@@ -22,6 +22,6 @@ include "../dto/dto_connection.php";
             return $mysqli;
         }
     }
-    $objCon=new Connection();
-    $objCon->connect();
+   
+    
 ?>

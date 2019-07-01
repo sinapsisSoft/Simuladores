@@ -41,11 +41,12 @@ class DaoSimulator
   public function selectSimulators()
   {
     try {
-      $con = $this->objConntion->connect();    
+      $con = $this->objConntion->connect();
+          
       if ($con != null) {        
           if ($result = $con->query("CALL sp_simul_select_all()")) {         
           while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $this->arrayResult[] = $row;        
+            $this->arrayResult[] = $row;
           };                 
           mysqli_free_result($result);          
         }
@@ -53,8 +54,9 @@ class DaoSimulator
       $con->close();
     } catch (Exception $e) {
       echo 'Exception captured: ', $e->getMessage(), "\n";
-    }     
-    return json_encode($this->arrayResult);    
+    }
+    
+    return json_encode($this->arrayResult);   
   }
 
   #Description : Function for select a simulator

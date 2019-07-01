@@ -1,12 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 10.1.2.127:3306
--- Tiempo de generación: 01-07-2019 a las 15:09:56
--- Versión del servidor: 10.2.24-MariaDB
--- Versión de PHP: 7.2.18
--- Autor: Laura Grisales
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 01-07-2019 a las 20:35:31
+-- Versión del servidor: 10.1.31-MariaDB
+-- Versión de PHP: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -22,86 +21,84 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `u645747626_sm`
 --
-CREATE DATABASE IF NOT EXISTS `u645747626_sm` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `u645747626_sm`;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
 DROP PROCEDURE IF EXISTS `sp_cond_insert`$$
-CREATE PROCEDURE `sp_cond_insert` (IN `initial` INT, IN `final` INT, IN `percent` DECIMAL(4,2), IN `Simul` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_cond_insert` (IN `initial` INT, IN `final` INT, IN `percent` DECIMAL(4,2), IN `Simul` INT)  BEGIN 
 INSERT INTO conditions(Cond_initial, Cond_final, Cond_percent, Sim_id) VALUES (initial,final,percent,Simul); 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_cond_select_all`$$
-CREATE PROCEDURE `sp_cond_select_all` ()  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_cond_select_all` ()  BEGIN 
 SELECT Cond_id, Cond_initial, Cond_final, Cond_percent, Sim_id FROM conditions;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_cond_select_simu`$$
-CREATE PROCEDURE `sp_cond_select_simu` (IN `simul` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_cond_select_simu` (IN `simul` INT)  BEGIN 
 SELECT Cond_id, Cond_initial, Cond_final, Cond_percent, Sim_id FROM conditions WHERE Sim_id = simul;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_cond_update`$$
-CREATE PROCEDURE `sp_cond_update` (IN `id` INT, IN `initial` INT, IN `final` INT, IN `percent` DECIMAL(4,2), IN `simul` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_cond_update` (IN `id` INT, IN `initial` INT, IN `final` INT, IN `percent` DECIMAL(4,2), IN `simul` INT)  BEGIN 
 UPDATE conditions SET Cond_initial=initial,Cond_final=final,Cond_percent=percent,Sim_id=simul WHERE Cond_id = id;
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_depart_insert`$$
-CREATE PROCEDURE `sp_depart_insert` (IN `name` VARCHAR(100))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_depart_insert` (IN `name` VARCHAR(100))  BEGIN 
 INSERT INTO department(Dep_name) VALUES (name); 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_depart_select_all`$$
-CREATE PROCEDURE `sp_depart_select_all` ()  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_depart_select_all` ()  BEGIN 
 SELECT Dep_id, Dep_name FROM department;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_depart_select_one`$$
-CREATE PROCEDURE `sp_depart_select_one` (IN `id` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_depart_select_one` (IN `id` INT)  BEGIN 
 SELECT Dep_id, Dep_name FROM department WHERE Dep_id = id;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_depart_update`$$
-CREATE PROCEDURE `sp_depart_update` (IN `id` INT, IN `name` VARCHAR(100))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_depart_update` (IN `id` INT, IN `name` VARCHAR(100))  BEGIN 
 UPDATE department SET Dep_name=name WHERE Dep_id = id;
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_entry_insert`$$
-CREATE PROCEDURE `sp_entry_insert` (IN `login` INT, IN `status` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_entry_insert` (IN `login` INT, IN `status` INT)  BEGIN 
 INSERT INTO entry(Login_id, Stat_id) VALUES (login,status); 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_entry_select_all`$$
-CREATE PROCEDURE `sp_entry_select_all` ()  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_entry_select_all` ()  BEGIN 
 SELECT Ent_id, Login_id, Stat_id FROM entry;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_entry_select_login`$$
-CREATE PROCEDURE `sp_entry_select_login` (IN `login` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_entry_select_login` (IN `login` INT)  BEGIN 
 SELECT Ent_id, Login_id, Stat_id FROM entry WHERE Login_id = login;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_entry_select_status`$$
-CREATE PROCEDURE `sp_entry_select_status` (IN `status` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_entry_select_status` (IN `status` INT)  BEGIN 
 SELECT Ent_id, Login_id, Stat_id FROM entry WHERE Stat_id = status;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_entry_update`$$
-CREATE PROCEDURE `sp_entry_update` (IN `id` INT, IN `login` INT, IN `status` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_entry_update` (IN `id` INT, IN `login` INT, IN `status` INT)  BEGIN 
 UPDATE entry SET Login_id=login, Stat_id=status WHERE Ent_id = id;
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_login`$$
-CREATE PROCEDURE `sp_login` (IN `email` VARCHAR(200), IN `pass` VARCHAR(30))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_login` (IN `email` VARCHAR(200), IN `pass` VARCHAR(30))  BEGIN 
 SET @mail = '';
 SET @password = '';
 #Verify if the email exists
@@ -121,30 +118,30 @@ END IF;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_login_insert`$$
-CREATE PROCEDURE `sp_login_insert` (IN `pass` VARCHAR(30), IN `user` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_login_insert` (IN `pass` VARCHAR(30), IN `user` INT)  BEGIN 
 INSERT INTO login(Login_password, User_id) VALUES (pass,user);
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_login_select_all`$$
-CREATE PROCEDURE `sp_login_select_all` ()  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_login_select_all` ()  BEGIN 
 SELECT Login_id, Login_password, User_id FROM login;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_login_select_one`$$
-CREATE PROCEDURE `sp_login_select_one` (IN `id` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_login_select_one` (IN `id` INT)  BEGIN 
 SELECT Login_id, Login_password, User_id FROM login WHERE Login_id = id;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_login_update`$$
-CREATE PROCEDURE `sp_login_update` (IN `mail` VARCHAR(200), IN `pass` VARCHAR(30))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_login_update` (IN `mail` VARCHAR(200), IN `pass` VARCHAR(30))  BEGIN 
 SET @user_id = (SELECT User_id FROM users WHERE User_email LIKE mail); 
 UPDATE login SET Login_password=pass WHERE User_id = @user_id; 
 SELECT ROW_COUNT();
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_simul_insert`$$
-CREATE PROCEDURE `sp_simul_insert` (IN `name` VARCHAR(80), IN `descrip` VARCHAR(200), IN `initial` INT, IN `final` INT, IN `percent` DECIMAL(4,2))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_simul_insert` (IN `name` VARCHAR(80), IN `descrip` VARCHAR(200), IN `initial` INT, IN `final` INT, IN `percent` DECIMAL(4,2))  BEGIN 
 INSERT INTO simulators(Sim_name, Sim_description) VALUES (name,descrip); 
 SET @id = LAST_INSERT_ID(); 
 INSERT INTO conditions(Cond_initial,Cond_final,Cond_percent,Sim_id) VALUES (initial,final,percent,@id);
@@ -152,99 +149,99 @@ SELECT ROW_COUNT();
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_simul_select_all`$$
-CREATE PROCEDURE `sp_simul_select_all` ()  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_simul_select_all` ()  BEGIN 
 SELECT * FROM simulators;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_simul_select_one`$$
-CREATE PROCEDURE `sp_simul_select_one` (IN `id` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_simul_select_one` (IN `id` INT)  BEGIN 
 SELECT Sim_id, Sim_name, Sim_description, Sim_conditions, Sim_benefits FROM simulators WHERE Sim_id = id;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_simul_update`$$
-CREATE PROCEDURE `sp_simul_update` (IN `id` INT, IN `name` VARCHAR(80), IN `descrip` VARCHAR(200))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_simul_update` (IN `id` INT, IN `name` VARCHAR(80), IN `descrip` VARCHAR(200))  BEGIN 
 UPDATE simulators SET Sim_name=name,Sim_description=descrip WHERE Sim_id = id;
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_stattype_insert`$$
-CREATE PROCEDURE `sp_stattype_insert` (IN `name` VARCHAR(30))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_stattype_insert` (IN `name` VARCHAR(30))  BEGIN 
 INSERT INTO status_type(Type_name) VALUES (name); 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_stattype_select_all`$$
-CREATE PROCEDURE `sp_stattype_select_all` ()  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_stattype_select_all` ()  BEGIN 
 SELECT Type_id, Type_name FROM status_type;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_stattype_select_one`$$
-CREATE PROCEDURE `sp_stattype_select_one` (IN `id` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_stattype_select_one` (IN `id` INT)  BEGIN 
 SELECT Type_id, Type_name FROM status_type WHERE Type_id = id;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_stattype_update`$$
-CREATE PROCEDURE `sp_stattype_update` (IN `id` INT, IN `name` VARCHAR(30))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_stattype_update` (IN `id` INT, IN `name` VARCHAR(30))  BEGIN 
 UPDATE status_type SET Type_name=name WHERE Type_id = id; 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_status_insert`$$
-CREATE PROCEDURE `sp_status_insert` (IN `name` VARCHAR(30), IN `type` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_status_insert` (IN `name` VARCHAR(30), IN `type` INT)  BEGIN 
 INSERT INTO status(Stat_name, Type_id) VALUES (name, type); 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_status_select_all`$$
-CREATE PROCEDURE `sp_status_select_all` ()  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_status_select_all` ()  BEGIN 
 SELECT Stat_id, Stat_name, Type_id FROM status;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_status_select_one`$$
-CREATE PROCEDURE `sp_status_select_one` (IN `id` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_status_select_one` (IN `id` INT)  BEGIN 
 SELECT Stat_id, Stat_name, Type_id FROM status WHERE Stat_id = id;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_status_select_type`$$
-CREATE PROCEDURE `sp_status_select_type` (IN `type` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_status_select_type` (IN `type` INT)  BEGIN 
 SELECT Stat_id, Stat_name, Type_id FROM status WHERE Type_id = type;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_status_update`$$
-CREATE PROCEDURE `sp_status_update` (IN `id` INT, IN `name` VARCHAR(30), IN `type` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_status_update` (IN `id` INT, IN `name` VARCHAR(30), IN `type` INT)  BEGIN 
 UPDATE status SET Stat_name=name, Type_id = type WHERE Stat_id = id; 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_town_insert`$$
-CREATE PROCEDURE `sp_town_insert` (IN `name` VARCHAR(100), IN `depart` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_town_insert` (IN `name` VARCHAR(100), IN `depart` INT)  BEGIN 
 INSERT INTO township(Town_name, Dep_id) VALUES (name, depart); 
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_town_select_all`$$
-CREATE PROCEDURE `sp_town_select_all` ()  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_town_select_all` ()  BEGIN 
 SELECT Town_id, Town_name, Dep_id FROM township;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_town_select_Dep`$$
-CREATE PROCEDURE `sp_town_select_Dep` (IN `dept` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_town_select_Dep` (IN `dept` INT)  BEGIN 
 SELECT Town_id, Town_name, Dep_id FROM township WHERE Dep_id = dept;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_town_select_one`$$
-CREATE PROCEDURE `sp_town_select_one` (IN `id` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_town_select_one` (IN `id` INT)  BEGIN 
 SELECT Town_id, Town_name, Dep_id FROM township WHERE Town_id = id;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_town_update`$$
-CREATE PROCEDURE `sp_town_update` (IN `id` INT, IN `name` VARCHAR(100), IN `depart` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_town_update` (IN `id` INT, IN `name` VARCHAR(100), IN `depart` INT)  BEGIN 
 UPDATE township SET Town_name=name,Dep_id=depart WHERE Town_id = id;
 SELECT ROW_COUNT(); 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_user_insert`$$
-CREATE PROCEDURE `sp_user_insert` (IN `name` VARCHAR(80), IN `identification` INT, IN `email` VARCHAR(200), IN `status` INT, IN `pass` VARCHAR(30))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_insert` (IN `name` VARCHAR(80), IN `identification` INT, IN `email` VARCHAR(200), IN `status` INT, IN `pass` VARCHAR(30))  BEGIN 
 SET @exist = (SELECT COUNT(User_email)FROM users WHERE User_email LIKE email); 
 IF @exist = 0 THEN 
 INSERT INTO users (User_name, User_identification, User_email, Stat_id) VALUES (name, identification, email, status); 
@@ -255,17 +252,17 @@ SELECT ROW_COUNT();
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_user_select_all`$$
-CREATE PROCEDURE `sp_user_select_all` ()  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_select_all` ()  BEGIN 
 SELECT User_id, User_name, User_identification, User_email, Stat_id FROM users; 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_user_select_one`$$
-CREATE PROCEDURE `sp_user_select_one` (IN `mail` VARCHAR(200))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_select_one` (IN `mail` VARCHAR(200))  BEGIN 
 SELECT User_id, User_name, User_identification, User_email, Stat_id FROM users WHERE User_email = mail; 
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_user_update`$$
-CREATE PROCEDURE `sp_user_update` (IN `id` INT, IN `name` VARCHAR(80), IN `status` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_update` (IN `id` INT, IN `name` VARCHAR(80), IN `status` INT)  BEGIN 
 UPDATE users SET User_name=name, Stat_id = status WHERE User_id = id; 
 SELECT ROW_COUNT(); 
 END$$
@@ -288,13 +285,8 @@ CREATE TABLE IF NOT EXISTS `conditions` (
   `Sim_id` int(11) NOT NULL,
   PRIMARY KEY (`Cond_id`),
   KEY `Conditions_Simulators` (`Sim_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Truncar tablas antes de insertar `conditions`
---
-
-TRUNCATE TABLE `conditions`;
 --
 -- Volcado de datos para la tabla `conditions`
 --
@@ -336,11 +328,6 @@ CREATE TABLE IF NOT EXISTS `department` (
   UNIQUE KEY `Dep_name` (`Dep_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Truncar tablas antes de insertar `department`
---
-
-TRUNCATE TABLE `department`;
 --
 -- Volcado de datos para la tabla `department`
 --
@@ -394,13 +381,8 @@ CREATE TABLE IF NOT EXISTS `entry` (
   PRIMARY KEY (`Ent_id`),
   KEY `Entry_Login` (`Login_id`),
   KEY `Entry_Status` (`Stat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Truncar tablas antes de insertar `entry`
---
-
-TRUNCATE TABLE `entry`;
 -- --------------------------------------------------------
 
 --
@@ -414,13 +396,8 @@ CREATE TABLE IF NOT EXISTS `login` (
   `User_id` int(11) NOT NULL,
   PRIMARY KEY (`Login_id`),
   UNIQUE KEY `User_id` (`User_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Truncar tablas antes de insertar `login`
---
-
-TRUNCATE TABLE `login`;
 -- --------------------------------------------------------
 
 --
@@ -435,29 +412,24 @@ CREATE TABLE IF NOT EXISTS `simulators` (
   `Sim_benefits` varchar(800) COLLATE utf8_unicode_ci NOT NULL,
   `Sim_destination` varchar(800) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`Sim_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Truncar tablas antes de insertar `simulators`
---
-
-TRUNCATE TABLE `simulators`;
 --
 -- Volcado de datos para la tabla `simulators`
 --
 
 INSERT INTO `simulators` (`Sim_id`, `Sim_name`, `Sim_conditions`, `Sim_benefits`, `Sim_destination`) VALUES
-(1, 'TARJETA TAVA (ROTATIVO)', 'Hasta 1,5 salario básico (según capacidad de pago), con un monto máximo de $8,000,000, Esta tarjeta excluye la adquisición de crediya de manera automática.<br><br>Suspensión:  Más de 60 días de mora, tendrá suspensión de aprobación de todas las lineas de crédito durante un  año.', 'Disponibilidad de efectivo en cajeros electrónicos.<br>Compras en establecimientos comerciales.<br>Cupo rotativo.<br>Baja cuota de manejo.', 'Brindar al Asociado liquidez inmediata, mediante un credito rotativo, que  permite realizar avances en efectivo en toda la red de cajeros electronicos  y compras  en numerosos establecimientos de todo el país y  de franquicia VISA.'),
-(2, 'EDUCACIÓN', 'Asociados nombrados en carrera administrativa, provisionalidad y  pensionados, hasta 6 veces el valor de los aportes. Asociados de Libre nombramiento y remoción, e independientes hasta            3 veces el valor de los aportes. No obstante lo anterior, el monto máximo no podrá superar los 110 SMMLV.', 'Facilidad en el pago de estudios.<br>Mejores oportunidades laborales.', 'Sufragar los gastos de educación del Asociado, su cónyuge o compañera permanente y/o de sus hijos.'),
-(3, 'SOBRE APORTES', 'Asociados nombrados en carrera administrativa, provisionalidad y pensionados, hasta 100% del valor de los aportes.<br><br>Asociados de libre nombramiento y remoción hasta el 70% del valor de sus aportes.<br><br>No obstante lo anterior, el monto máximo no podrá superar los 110 SMMLV.<br>                                                                                                          Un solo crédito por está línea si el asociado requiere otro préstamo sobre aportes, se debe recoger el saldo pendiente.', 'Cubrimiento de necesidades del grupo familiar.', 'Los créditos Sobreaportes serán destinados a facilitar el cubrimiento parcial o total de las necesidades que busquen el bienestar social de los Asociados y de su núcleo familiar.'),
-(4, 'SOBREPRIMA', 'Se otorgará dos (2) veces al año:                                                                                      Primer Semestre: De Abril 1 a Junio 5. Segundo Semestre: De Septiembre 1 a Noviembre 5.', 'Cubrimiento de necesidades grupo familiar Disfrute anticipado de la prima.', 'Los créditos Sobreprima serán destinados a facilitar en un corto plazo el cubrimiento parcial o total de las necesidades que busquen el bienestar social de los Asociados y de su núcleo familiar.'),
-(5, 'FIDELIDAD', '10 años continuos de estar afiliado a la Cooperativa.', 'Tasa Preferencial.', 'Premiar a los asociados por su fidelidad y continuidad con la Cooperativa.'),
-(6, 'COMPRAS', 'N/A', 'Facilitar la adquisición de bienes y servicios al Asociado.', 'Brindar un crédito que le permita al asociado gestionar la obtención de   bienes y servicios a través de los convenios suscritos por Coominobras.'),
-(7, 'COMPRA DE CARTERA', 'Carrera, provisionalidad, pensionados, empleados hasta 6 veces el valor de los aportes', 'Tasa preferencial.<br>Mejoramiento de ingresos.<br>Liberación capacidad de pago.', 'Compra de obligaciones financieras.'),
-(8, 'CREDI YA', 'Solo podrá solicitar un nuevo CREDI YA hasta que haya cancelado el anterior.', 'Crédito inmediato.', 'Liquidez inmediata.'),
-(9, 'ORDINARIO', 'Asociados nombrados en carrera administrativa, provisionalidad y  pensionados, hasta 6 veces el valor de los aportes. Asociados de Libre nombramiento y remoción, e independientes hasta 3 veces el valor de los aportes. No obstante lo anterior, el monto máximo no podrá superar los 110 SMMLV.', 'Mejoramiento de calidad de vida<br>Adquisición de elementos para el hogar<br>Bienestar familiar', 'Destinado para cualquier tipo de consumo o libre inversión'),
-(10, 'PROMOCIONAL', 'Estar al día en sus obligaciones con la Cooperativa.                                                  Tener capacidad de pago.                                                                                              Llevar como mínimo 12 meses consecutivos de ser asociado a la Cooperativa.               Monto máximo de préstamo $30,000,000.                                                                   No se permite recoger cartera de la Cooperativa si esta con tasa superior.', '* Tasa Preferencial<br>* Libre inversión', 'Su destino es contar con una línea de crédito que se utilice en eventos especiales como: ferias empresariales, tomas de entidades, entre otros'),
-(11, 'TURISMO', 'Asociados nombrados en carrera administrativa, provisionalidad y  pensionados, hasta 6 veces el valor de los aportes.                                                                                                                    Asociados de Libre nombramiento y remoción, e independientes hasta            3 veces el valor de los aportes.Un solo crédito por está línea si el asociado requiere otro préstamo de turismo, se debe recoger el saldo pendiente.', '*Contar con el respaldo de la Cooperativa para créditos de turismo<br>*Tasa preferencial<br>*No requiere antigüedad en la Cooperativa', 'Línea de crédito encaminada a financiar planes vacacionales nacionales e internacionales que contribuyan al descanso y esparcimiento del asociado y su grupo familiar');
+(1, 'TARJETA TAVA (ROTATIVO)', 'test', 'test', 'test'),
+(2, 'EDUCACION', 'test', 'test', 'test'),
+(3, 'SOBRE APORTES', 'test', 'test', 'test'),
+(4, 'SOBREPRIMA', 'test', 'test', 'test'),
+(5, 'FIDELIDAD', 'test', 'test', 'test'),
+(6, 'COMPRAS', 'test', 'test', 'test'),
+(7, 'COMPRA DE CARTERA', 'test', 'test', 'test'),
+(8, 'CREDI YA', 'test', 'test', 'test'),
+(9, 'ORDINARIO', 'test', 'test', 'test'),
+(10, 'PROMOCIONAL', 'test', 'test', 'test'),
+(11, 'TURISMO', 'test', 'test', 'test');
 
 -- --------------------------------------------------------
 
@@ -473,13 +445,8 @@ CREATE TABLE IF NOT EXISTS `status` (
   PRIMARY KEY (`Stat_id`),
   UNIQUE KEY `Stat_name` (`Stat_name`),
   KEY `Status_Type` (`Type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Truncar tablas antes de insertar `status`
---
-
-TRUNCATE TABLE `status`;
 -- --------------------------------------------------------
 
 --
@@ -491,13 +458,8 @@ CREATE TABLE IF NOT EXISTS `status_type` (
   `Type_id` int(11) NOT NULL AUTO_INCREMENT,
   `Type_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`Type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Truncar tablas antes de insertar `status_type`
---
-
-TRUNCATE TABLE `status_type`;
 -- --------------------------------------------------------
 
 --
@@ -514,11 +476,6 @@ CREATE TABLE IF NOT EXISTS `township` (
   KEY `Township_Department` (`Dep_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1200 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Truncar tablas antes de insertar `township`
---
-
-TRUNCATE TABLE `township`;
 --
 -- Volcado de datos para la tabla `township`
 --
@@ -1741,13 +1698,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `User_email` (`User_email`),
   UNIQUE KEY `User_identification` (`User_identification`),
   KEY `Users_Status` (`Stat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Truncar tablas antes de insertar `users`
---
-
-TRUNCATE TABLE `users`;
 --
 -- Restricciones para tablas volcadas
 --

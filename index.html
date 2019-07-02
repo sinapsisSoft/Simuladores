@@ -82,8 +82,14 @@
             </div>
             <div class="col-sm gutters-19">
               <div class="form-group">
-                <input id="rode" class="form-control" type="text" onKeyUp="validateText(this.id)" maxlength="11"
-                  min="0.00" placeholder="Valor a solicitar" disabled required>
+                  <div class="input-group ">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                      </div>
+                      <input id="rode" class="form-control" type="text" onKeyUp="validateText(this.id)" maxlength="11"
+                      min="0.00" placeholder="Valor a solicitar" disabled required>
+                    </div>
+            
               </div>
             </div>
             <div class="col-lg-3 gutters-19">
@@ -150,8 +156,6 @@
           <div class="col-md-12 col-lg-12 mb-12 mb-lg-12">
             <div class="card card-special table-responsive">
               <table id="tableResult" class="table table-hover">
-              
-                </tbody>
               </table>
             </div>
           </div>

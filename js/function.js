@@ -108,6 +108,7 @@ function sectionMaxMin(data) {
 //Function create select week
 function createSelect(max, mini) {
 	selectList = document.getElementById("term");
+
 	var option = "<option value='0'>Número de cuotas</option>";
 	let aux = document.getElementsByClassName("nice-select")[1];
 	let option2 = '<span class="current">Número de cuotas</span><ul class="list"><li data-value="0" class="option selected focus">Número de cuotas</li>';
@@ -184,10 +185,43 @@ function validateText(id) {
 }
 //Function calculate
 function calculate(e) {
-	
 
-	e.preventDefault();
-	
+	var dataRate = 1;
+	varEvent = e;
+	var lineCredit = document.getElementById("credit-line");
+	selectWeek = document.getElementById("term");
+	var selectlineCredit = lineCredit.options[lineCredit.selectedIndex].value;
+	if (selectlineCredit == 0) {
+		modalAlert(0);
+		e.preventDefault();
+
+	} else {
+		if (selectWeek) {
+			var selectItemsWeek = selectList.options[selectList.selectedIndex].value;
+			if (selectItemsWeek == 0) {
+				modalAlert(1);
+			} else {
+				if (dataRode.value === null || dataRode.value === "" || dataRode.value.length === 0) {
+					modalAlert(2);
+
+				} else {
+					var text = dataRode.value.replace(/\./g, "");
+					if (text.length < 6) {
+						modalAlert(3);
+						cleanTable();
+						e.preventDefault();
+					} else {
+						createTableAmortization("tableResult", selectItemsWeek, dataRate, text);
+						$(".ContainerTableResult").fadeIn();
+						$("#contInfo2").fadeIn(1000);
+						anchor(e, "#result");
+					}
+
+				}
+			}
+		}
+
+	}
 }
 //Function create table result
 function createTableAmortization(idTable, term, rate, rode) {
@@ -230,10 +264,10 @@ function createTableAmortization(idTable, term, rate, rode) {
 	table.innerHTML = newTable;
 	rate = parseFloat(rate * 100).toFixed(2);
 
-	var textInfo = "<ul class='listInfoTable'><li><span><b> Línea de crédito: </b></span> " + titleLine + " </li><li><i class='fa fa-map-marker'></i> <span> <b>Plazo:</b></span> " + term + " Meses </li><li><i class='fa fa-phone'></i> <span> <b>Tasa de Interés:</b></span> " + rate + " %</li><li><i class='fa fa-phone'></i> <span> <b>Valor de la cuota aproximado :</b></span> $" + numberWithCommas(ressult.toFixed(0)) + "</li><li><i class='fa fa-envelope'></i> <span><b> Valor Solicitado:</b></span> $" + numberWithCommas(rode) + "</li></ul>";
+	var textInfo = "<ul class='listInfoTable'><li><span><b> Línea de crédito: </b></span> " + titleLine + " </li><li> <span> <b>Plazo:</b></span> " + term + " Meses </li><li> <span> <b>Tasa de Interés:</b></span> " + rate + " %</li><li><span> <b>Valor de la cuota aproximado :</b></span> $" + numberWithCommas(ressult.toFixed(0)) + "</li><li><span><b> Valor Solicitado:</b></span> $" + numberWithCommas(rode) + "</li></ul>";
 
 
-	
+
 	$(".detail").html(textInfo);
 
 }
@@ -274,6 +308,7 @@ function cleanTable() {
 	$("#tableResult >thead").remove();
 	$("#tableResult >tbody").remove();
 	$("#tableResult >tfoot").remove();
+	$("#contInfo2").fadeOut();
 }
 
 function validaSection(data) {
@@ -284,15 +319,12 @@ function validaSection(data) {
 
 function alerts(select, id) {
 	var listMenssage = new Array("Seleccione un linéa de credito", "Seleccione el plazo", "Digite un monto", "Verifique el monto", "Los valores presentados en el simulador de crédito son aproximado y pueden generar variacion  al momento que realices esta solicitud.");
-	var alerts = $(id);
-	alerts.fadeOut(10, function () {
-		alerts.fadeIn(100, function () {
-			$(".textAlert").html("<strong>Información! </strong>" + listMenssage[select]);
-			setTimeout(function () {
-				alerts.fadeOut(150);
-			}, 4000);
-		});
+	var Objalerts = $(id);
+	console.log(Objalerts);
+	Objalerts.fadeOut(10, function () {
+
 	});
+
 	//anchor(varEvent,"#result");
 }
 
@@ -304,3 +336,10 @@ function anchor(e, id) {
 	}, 1000);
 
 };
+function modalAlert(idText) {
+	var listMenssage = new Array("Seleccione un linéa de credito", "Seleccione el plazo", "Digite un monto", "Verifique el monto", "Los valores presentados en el simulador de crédito son aproximado y pueden generar variacion  al momento que realices esta solicitud.");
+	var modalAlert = $("#modalAlert");
+	modalAlert.modal({ show: true });
+	$("#ModalParagraph").text(listMenssage[idText]);
+}
+

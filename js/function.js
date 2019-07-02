@@ -60,8 +60,8 @@ function selectItems(data) {
 		//console.log(maxMin);
 		for (var i = 0; i < objCredit.length; i++) {
 			if (objCredit[i].Sim_id === data) {
-				//alert();
-				document.getElementById('description').innerHTML = "<p>" + objCredit[i].Sim_description + "</p>";
+				
+				
 				document.getElementById('destination').innerHTML = "<p>" + objCredit[i].Sim_destination + "</p>";
 				document.getElementById('conditions').innerHTML = "<p>" + objCredit[i].Sim_conditions + "</p>";
 				document.getElementById('benefits').innerHTML = "<p>" + objCredit[i].Sim_benefits + "</p>";

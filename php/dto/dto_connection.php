@@ -9,10 +9,10 @@
     private $database;
 
     function __construct(){ 
-        $this->user="root";
-        $this->password="";
-        $this->server="127.0.0.1";
-        $this->database="u645747626_sm";
+        $this->user="admin_sinapsis";
+        $this->password="Sinapsis2020*";
+        $this->server="localhost";
+        $this->database="admin_simulator";
         }
         public function getUser()
         {

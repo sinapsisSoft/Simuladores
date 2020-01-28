@@ -264,7 +264,7 @@ function createTableAmortization(idTable, term, rate, rode) {
 	table.innerHTML = newTable;
 	rate = parseFloat(rate * 100).toFixed(2);
 
-	var textInfo = "<ul class='listInfoTable'><li><span><b> Línea de crédito: </b></span> " + titleLine + " </li><li> <span> <b>Plazo:</b></span> " + term + " Meses </li><li> <span> <b>Tasa de Interés:</b></span> " + rate + " %</li><li><span> <b>Valor de la cuota aproximado :</b></span> $" + numberWithCommas(ressult.toFixed(0)) + "</li><li><span><b> Valor Solicitado:</b></span> $" + numberWithCommas(rode) + "</li></ul>";
+	var textInfo = "<ul class='listInfoTable'><li><span><b> Línea de crédito: </b></span> " + titleLine + " </li><li> <span> <b>Plazo:</b></span> " + term + " Meses </li><li> <span> <b>Tasa de Interés:</b></span> " + rate + " %</li><li><span> <b>Valor de la cuota aproximado :</b></span> $" + numberWithCommas(ressult.toFixed(0)) + "</li><li><span><b> Valor Solicitado:</b></span> $" + numberWithCommas(rode) + "</li><li><span><b> Los valores aquí mostrados son aproximados, por lo tanto, pueden variar.</b></span></li></ul>";
 
 
 

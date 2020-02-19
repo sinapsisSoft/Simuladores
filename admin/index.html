@@ -1,0 +1,833 @@
+<!doctype html>
+<html>
+<head>
+
+<title>Administrador Simuladores</title>
+
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Corporate web portal of savings.">
+    <meta name="distribution" content="global"/>
+    <meta name="Keywords" content="Coominobras,cooperativa,ahorro"/>
+    <meta name="Robots" content="all"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet">
+<link href="css/responsive.css" rel="stylesheet">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style type="text/css">
+	.invalidate {
+    border: solid rgba(169, 26, 28, 0.68);
+	}
+	.validate {
+    border: 1px solid #ccc;
+	}
+	.btnKey{
+	font-size: 40px;
+    color: blue;
+    cursor: pointer;
+    /* margin-bottom: 74px; */
+    position: absolute;
+    right: 100px;
+    top: 50px;
+	}
+	.btnKey:hover{
+	font-size: 35px;
+    color: cornflowerblue;
+    
+	}
+	.navbar {
+    margin-bottom: 0;
+    background-color: #0085CC;
+    z-index: 100;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 3px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+}
+	.navbar-brand {
+    float: left;
+    height: 50px;
+    padding: 0px !important;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.jumbotron{
+   background-color: #0085CC;
+   color: #fff;
+   padding: 60px 25px;
+   font-family: Montserrat, sans-serif;
+}
+.navbar {
+	margin-bottom: 0;
+	background-color: #0085CC;
+	z-index: 9999;
+	border: 0;
+	font-size: 12px !important;
+	line-height: 1.42857143 !important;
+	letter-spacing: 4px;
+	border-radius: 0;
+	font-family: Montserrat, sans-serif;
+}
+.navbar li a, .navbar .navbar-brand {
+	color: #fff !important;
+}
+.navbar-nav li a:hover, .navbar-nav li.active a {
+	color: #0085CC !important;
+	background-color: #fff !important;
+}
+.navbar-default .navbar-toggle {
+	border-color: transparent;
+	color: #fff !important;
+}
+	.logo_{
+	margin-left: 10px;
+    margin-top: 10px;
+	}
+</style>
+
+<script type="text/javascript">
+ const dataHttp="http://www.coominobras.com.co/Simuladores/admin/login.html";
+function nobackbutton(){
+	local_Storage();
+   window.location.hash="no-back-button";
+   window.location.hash="Again-No-back-button" //chrome
+   window.onhashchange=function(){window.location.hash="no-back-button";}  
+  
+}
+function local_Storage(){
+	if(window.local_Storage)
+	{
+	
+	var obj=JSON.parse(localStorage.getItem("user"));
+		 if(obj==null)
+			 {	
+				 var objs=JSON.parse(sessionStorage.getItem("user"));
+	
+				 if(objs==null){
+				
+					    sessionStorage.clear();
+					   
+					 start(100);
+ 						
+				 }else{
+					document.getElementById('nameUser').innerHTML="<span  class='glyphicon glyphicon-user'></span> "+objs.userName+" "+objs.userSurname;
+					
+					
+				 }
+			 }
+		 else
+			 {
+				
+				document.getElementById('nameUser').innerHTML="<span  class='glyphicon glyphicon-user'></span> "+obj.userName+" "+obj.userSurname;
+				 sessionStorage.setItem("user",localStorage.getItem("user"));
+				 localStorage.removeItem("user");
+					 
+			 }
+		
+
+	}
+	else
+	{
+	 throw new Error('Tu Browser no soporta LocalStorage!');	
+	}
+	
+};
+	function closeSection(){
+		
+		var condition=confirm("!Esta seguro de realizar esta acción¡");
+		
+		if(condition==true){
+			sessionStorage.clear();
+			stop(1);
+ 			document.getElementById('singOff').href=dataHttp;
+		
+		}
+
+	};
+
+	var objectData;
+	var objectLoanCondition;
+	var obj="";
+	var selectValue="";
+	var selectValueMonths="";
+	var id=null;
+	var numCellRow=1;
+	//Function for load data jSon 
+	function loadData(select){
+		var xhttp=new XMLHttpRequest();
+		xhttp.open("POST","php/bo_credit.php",true);
+		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhttp.onreadystatechange=function(){		
+			if(this.readyState==4 && this.status==200){
+				if(select==0){
+				   objectData = JSON.parse(xhttp.responseText);
+					//console.log(objectData);
+				    createTable(objectData);
+					
+					}
+				if(select==1){
+					objectLoanCondition = JSON.parse(xhttp.responseText);
+					if(objectLoanCondition!=null){
+						createList(objectLoanCondition);
+					}
+					//console.log(objectLoanCondition);
+			
+					
+				}
+				if(select==2){
+				//objectLoanCondition = JSON.parse(xhttp.responseText);
+				//createList(objectLoanCondition);
+					//console.log(xhttp.responseText);
+					if(xhttp.responseText){
+						
+						alert("Simulador creado con exíto");
+						cleanData();
+						searchDataCredit();
+					}
+					
+				}
+				if(select==3){
+				//objectLoanCondition = JSON.parse(xhttp.responseText);
+				//createList(objectLoanCondition);
+					if(xhttp.responseText){
+						//alert(xhttp.responseText+"Simulador creado con exito");
+						alert("Simulador eliminado con exíto");
+						//cleanData();
+						searchDataCredit();
+					}
+					
+				}
+			}
+		};
+		
+		xhttp.send(obj);
+	}
+	//Function for data search
+	function searchDataCredit(){
+		var data=document.getElementById('searchCredit').value.toLowerCase();
+		obj="select=select&dataSearch="+data;
+		loadData(0);
+		
+		
+	}
+	//Function for create  table resultvalidateInsertCredit()
+	function createTable(object){
+		var table=document.getElementById('table');
+		var dataTable="<thead><tr><th>Nombre</th><th>Beneficio</th><th>Condición</th><th>Destino</th></tr></thead><tbody>";
+		
+		for(var i=0;i<object.length;i++){
+			//console.log(object[i]);
+			dataTable+="<tr><td>"+object[i].credName+"</td><td>"+object[i].credBenefits+"</td><td>"+object[i].credCondition+"</td><td>"+object[i].credDestination+"</td>"+
+			"<td><i class='material-icons'title='Editar crédito'"+
+			"style='font-size:30px;color:blue;cursor:pointer' data-toggle='modal' data-target='#myModal' onclick='loadDataCredit("+i+")'>mode_edit</i></td>"+
+			"<td><i class='material-icons' title='Eliminar crédito'id='"+object[i].credId+"_btn' style='font-size:30px;color:red;cursor:pointer' onclick='deleteCredit("+object[i].credId+")'>delete</i></td></tr></tbody>";
+			//console.log(object);
+		}
+		table.innerHTML=dataTable;
+	
+	}
+	//Function for delete data
+	function deleteCredit(data){
+		//console.log(data);
+		var text;
+		var r=confirm("Esta seguro de realizar esta acción!");
+		if(r==true){
+			obj="delete=delete&credId="+data;
+			console.log(obj);
+			loadData(3);
+		
+		}
+		else{
+			
+		}
+		
+	}
+	//Function load data view 
+	function loadDataCredit(data,object){
+		cleanData();
+		document.getElementById('credId').value=objectData[data].credId;	
+		document.getElementById('credBenefits').value=objectData[data].credBenefits.replace(/<br>/g,'\n').trim();
+		document.getElementById('credCondition').value=objectData[data].credCondition.replace(/<br>/g,'\n').trim();
+		document.getElementById('credDestination').value=objectData[data].credDestination.replace(/<br>/g,'\n').trim();
+		document.getElementById('credName').value=objectData[data].credName.trim();
+		//alert("Id:"+objectData[data].credId);
+		obj="selectList=selectList&credId="+objectData[data].credId;
+		loadData(1);
+		createLists('listMonthsStart');
+		createLists('listMonthsEnd');
+	}
+	//Function for create  list condition
+	function createList(object){
+		var list=document.getElementById("listCondition");
+		var listOption ;
+		var listResult=new Array();
+		var list;
+		
+		for (var i=0;i<object.length;i++){
+			list=new Array();
+			
+			list[0]=(object[i].condTerm);
+			list[1]=(object[i].condRate);
+			list[2]=(object[i].cond_NMV);
+			listResult[i]=list;
+			
+		}
+		
+		createTableCondition(listResult);
+		
+	}
+	function selectionList(value,typeSelectio){
+		if(typeSelectio=0){
+		selectValue=value;
+			}
+		else{
+		selectValueMonths=value;
+			}
+	}
+	function validateInsertCredit(){
+		var valueData=new Array();
+		var id=document.getElementById('credId');
+		if(id.value=="" || id.value==null)
+			{
+				id.value=0;
+				valueData[0]=id;
+			}else{
+				valueData[0]=id;
+			}
+		valueData[1]=document.getElementById('credName');
+		valueData[2]=document.getElementById('credCondition');
+		valueData[3]=document.getElementById('credDestination');
+		valueData[4]=document.getElementById('credBenefits');
+		//valueData[5]=document.getElementById('listCondition');
+		var lengthDate=valueData.length;
+		var validate=true;
+		
+		obj="";
+		
+		for(var i=0;i<lengthDate;i++){
+			
+			var values=valueData[i].value;
+			var idElement=valueData[i].id;
+			values=values.trim();
+			if (values == "" || values.length == 0 || /^\s+|\s+$/.test(values)) {
+				i=lengthDate;
+				$("#"+idElement).removeClass( "validate" ).addClass( "invalidate" );
+				validate=false;
+			}
+			else{
+				$("#"+idElement).removeClass( "invalidate" ).addClass( "validate" );
+				values=values.replace(/(?:\r\n|\r|\n)/g, '<br>');
+				obj+=valueData[i].getAttribute('id')+"="+values+"&".trim();
+		
+			}
+		}
+		if(!validate){
+			alert("Por favor verifique los datos");
+		}else{
+			var result=sendCreateCredit();
+			if(!result)
+			{
+				alert("Es necesario crear una condición");	
+			}
+			else{
+				obj+='json='+result;
+				
+				sendDataCreate(obj);
+				//console.log(obj);
+			}
+		}
+		
+	}
+	//Function send data create  credit
+	function sendDataCreate(data){
+		obj="insert=insert&"+data;
+		
+		//console.log(obj);
+		loadData(2);
+	}
+	function createCredit(){
+		cleanData();
+		createLists('listMonthsStart');
+		createLists('listMonthsEnd');
+	}
+	function cleanData(){
+		 $('#myModal').modal('hide')
+		document.getElementById('credId').value="";	
+		document.getElementById('credBenefits').value="";
+		document.getElementById('credCondition').value="";
+		document.getElementById('credDestination').value="";
+		document.getElementById('credName').value="";
+		document.getElementById('rateMonths').value="";
+		document.getElementById('rateYears').value="";
+		//cleanList(0,'listCondition');
+		cleanList(1,'listMonthsStart');
+		cleanList(1,'listMonthsEnd');
+		$(".invalidate").removeClass( "invalidate" );
+		$(".validate").removeClass( "validate" );
+		$('#TableBody tr').remove();
+	
+	}
+	function cleanList(type,id){
+		var list=document.getElementById(id);
+		var listLenght=list.options.length;
+		
+		
+			if(type==0){
+				for(var i=0;i<listLenght;i++){
+				if(list.options[i].selected){
+					list.options[i].selected=false;					
+				}
+				}
+			}else if(type==1)
+			{
+				$("#"+id+" option").remove();
+				//createLists(id);
+				//alert(id);	
+			    
+			}
+		
+	}
+	function mouseUpValidate(data,id){
+	var ex=/^\d{1,3}(?:,\s?\d{3})*(?:\.\d*)?$/;
+    var OK = ex.exec(data); 
+ 
+		if(!OK)
+		{
+		var newString = data.substring(0,data.length-1);
+
+		document.getElementById(id).value = newString;
+
+
+		}
+    }
+	function createLists(id){
+		var listMonths=document.getElementById(id);
+		var listOption;
+		for(var i=1;i<=60;i++){
+			listOption=document.createElement("option");
+			listOption.value=i;
+			listOption.text=i;
+			listMonths.appendChild(listOption);
+	
+		}
+		
+	}
+	function createConditionCredit(){
+		var valueData=new Array();
+		
+		//var checked=document.getElementById('checkCalculateRate').checked;
+		valueData[0]=document.getElementById('listMonthsStart');
+		valueData[1]=document.getElementById('listMonthsEnd');
+		valueData[2]=document.getElementById('rateMonths');
+		valueData[3]=document.getElementById('checkCalculateRate');
+		valueData[4]=document.getElementById('rateYears');
+		var validate=true;
+		for(var i=0;i<valueData.length;i++){
+
+			if(valueData[i].type=="select-one"){
+				
+			}else if(valueData[i].type=="text"){
+				var idElementCondition=valueData[i].id;
+				
+				if (valueData[i].value == "" || valueData[i].value.length == 0 || /^\s+|\s+$/.test(valueData[i].value)) {
+					i=valueData.length;
+					
+					$("#"+idElementCondition).removeClass( "validate" ).addClass( "invalidate" );
+					validate=false;
+				}else{
+					$("#"+idElementCondition).removeClass( "invalidate" ).addClass( "validate" );
+				}
+			}else if(valueData[i].type=="checkbox"){
+
+			}
+
+		}
+		if(!validate)
+		{
+			alert("Verifique los  datos");
+		}else{
+			$(".validate").removeClass( "validate invalidate" );
+		}
+		
+		var dataStart=parseInt(valueData[0].options[valueData[0].selectedIndex].value);
+		var dataEnd=parseInt(valueData[1].options[valueData[1].selectedIndex].value);
+	
+		
+		if(dataStart > dataEnd){
+			alert("El valor inicial del mes no puede ser mayor que el valor final");
+			validate=false;
+		
+		}
+		if(validate)
+		  {
+			 /*obj="loan_condition=loan_condition&condTerm="+dataStart+"-"+dataEnd+"&condRate="+valueData[2].value+"&cond_NMV="+valueData[4].value;
+			  console.log(obj);*/
+			  var arrayList =new Array(dataStart+"-"+dataEnd,valueData[2].value,valueData[4].value)
+			  var serlectCondition=new Array();
+			  serlectCondition[0]=arrayList;
+			  createTableCondition(serlectCondition);
+			  //loadData(0);
+			  /*cleanList(1,'listMonthsStart');
+			  cleanList(1,'listMonthsEnd');
+			  	createLists('listMonthsStart');
+				createLists('listMonthsEnd');*/
+			  	valueCheck(0);
+		   }
+			
+	}
+	function valueCheck(value){
+		var checked=document.getElementById('checkCalculateRate');
+		var dataValueYears=document.getElementById('rateYears');
+		var dataValueMonths=document.getElementById('rateMonths');
+		if(value==0){
+			dataValueYears.disabled=false;
+			dataValueYears.value="";
+			dataValueMonths.value="";
+			checked.checked=false;
+		}
+		else{
+			if(checked.checked){
+				if (dataValueMonths.value == "" || dataValueMonths.value.length == 0 || /^\s+|\s+$/.test(dataValueMonths.value)){
+					alert("Verifique los  datos");
+					dataValueYears.value="";
+					checked.checked=false;
+				}else{
+					dataValueYears.value=(parseFloat(dataValueMonths.value)*12).toFixed(2);;
+					dataValueYears.disabled=true;
+				}
+			}
+			else{
+				dataValueYears.disabled=false;
+				dataValueYears.value="";
+			}
+		}
+		
+	}
+	function createTableCondition(data){
+		var newTable=document.getElementById('SeletCondition').getElementsByTagName('tbody')[0];
+		
+		
+		if(valiadteTableCondition(newTable,data)){
+			selectCreateCondition(newTable,data);
+		}
+		else{
+			alert("Verifique la condición del plazo");
+		}
+	};
+	function selectCreateCondition(table,data){
+		var newRow;
+		
+		for( var i=0;i<data.length;i++){
+			newRow=table.insertRow(table.rows.length);
+		newRow.id=numCellRow;
+			for(var j=0;j<=data[i].length;j++){
+				var newCell=newRow.insertCell(j);
+			// Append a text node to the cell
+	
+				if(j==data[i].length){
+				var newButton=document.createElement('span');
+				newButton.innerHTML = '<button class="btn btn-danger btn-xs" title="Eliminar condición"  onclick="deleteCell(' + numCellRow +')" >x</button>';
+				newCell.appendChild(newButton);
+				numCellRow++;
+				
+			}else{
+				newCell.appendChild(document.createTextNode(data[i][j]));
+			}
+			};
+		}
+	}
+	function deleteCell(data){
+		var row = document.getElementById(data);
+    	row.parentNode.removeChild(row);
+		//document.getElementById('SeletCondition').deleteRow(data);
+	};
+	//function for send data  create  credit
+	function sendCreateCredit(){
+		var newTable=document.getElementById('SeletCondition').getElementsByTagName('tbody')[0];
+		if(newTable.rows.length==0){
+			
+			return false;
+		}
+		else{
+			var objListCondition='{"conditions":[';
+			var list="";
+			for(var i=0;i<newTable.rows.length;i++){
+				var cell=newTable.rows[i].getElementsByTagName("td");
+				if(i==newTable.rows.length-1){
+				list+='{"condTerm":"'+cell[0].innerText+'","condRate":"'+cell[1].innerText+'" ,"cond_NMV":"'+cell[2].innerText+'" }';
+				}
+				else{
+				list+='{"condTerm":"'+cell[0].innerText+'","condRate":"'+cell[1].innerText+'" ,"cond_NMV":"'+cell[2].innerText+'" },';
+				}
+				//list[i]=objListCondition;
+			}
+			objListCondition+=list+']}';
+			//var result=updateCredit();
+			//console.log(objListCondition);
+			return objListCondition;
+		}
+		
+	};
+	//function for validate  items table condition 
+	function valiadteTableCondition(table,adata){
+		
+		var lengthRow=table.rows.length;
+		//alert(lengthRow);
+		if(lengthRow>0){
+			var validate=true;
+		
+				
+				for(var i=0;i<lengthRow;i++){
+					var cell=table.rows[i].getElementsByTagName("td");
+					var cellStart=adata[0][0].split("-");
+					var cellOld=(cell[0].innerText).split("-");
+					var data1=parseInt(cellStart[1]);
+					var data2=parseInt(cellOld[1]);
+					var data3=parseInt(cellStart[0]);
+					var result=data3-data2;
+					
+					if(data1 <= data2){
+
+						validate=false;
+					}else{
+						validate=true;
+					}
+					if(data3 <= data2){
+					
+						validate=false;
+					}else{
+						validate=true;
+					}
+					if(result!=1){
+					
+					validate=false;
+					}else{
+						validate=true;
+					}
+				}
+			
+			return validate;
+		}else{
+			return true;
+		}
+	}
+	
+	var section;
+	function start(data) {
+		
+	  section = setTimeout(function(){
+		  if(data==100000){
+		  alert("Se ha terminado la sesión ");
+			}
+			sessionStorage.clear();
+		  location.assign(dataHttp);
+		  stop(1);
+			
+	  },data); 
+
+	}
+	function stop(data) {
+	  clearTimeout(section);
+		if(data==0){
+	  	start(100000);
+		}
+	}
+</script> 
+</head>
+
+<body onload="nobackbutton();start(100000)" onkeypress="stop(0)" onclick="stop()" id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+<div id="home">
+ 
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+     
+      <div class="navbar-header">
+       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"> 
+			<span class="icon-bar"></span> 
+			<span class="icon-bar"></span> 
+		
+        </button>
+        <a class="navbar-brand" href="#myPage">
+       	 <h1><img class="img-responsive logo_" src="images/logo.png" alt="logo"></h1>
+        </a> 
+       </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+       <ul class="nav navbar-nav navbar-right">
+        <li>
+        <a href="#" id="nameUser"></a>
+        </li>
+        <li>
+        <a id="singOff" onClick="closeSection()" title="Cerrar sesión"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+      </ul>
+      </div>
+      
+    </div>
+  </nav>
+  <div class="jumbotron text-center">
+    <h1>Coominobras</h1>
+    <p>¡Primero el asociado!</p>
+   
+  </div>
+</div>			
+	
+	<!--Container General-->
+<div class="container">
+	<input style="display:none;" type="text" id="credId">
+	<!--Row-->
+	<div class="row">
+		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-7">
+		  <div class="input-group">
+	
+			<input type="text" id="searchCredit" class="form-control" placeholder="Digite el nombre del credito...">
+			<div class="input-group-btn ">
+		  
+			  <button  title="Buscar simulador" class="btn btn-default" onClick="searchDataCredit()">
+				<i class="glyphicon glyphicon-search"></i>
+			  </button>
+			</div>
+		  </div>
+		</div>
+		  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-5">
+		  	
+			<input type="button" title="Nuevo simulador" class="btn btn-primary center-block btn-sm"value="Nuevo simulador" data-toggle="modal" data-target="#myModal" onClick="createCredit()">
+			
+			</div>
+			
+	  	
+	</div>
+	<!--End Row-->
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="table-responsive">
+				<table class='table table-hover' id='table'></table>
+			</div>
+		
+	  		</div>
+	</div>
+	<!-- Modal -->
+	  <div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Simulador</h4>
+			</div>
+			<div class="modal-body">
+		  	
+		  	<div class="row">
+		  	  
+				<div class=" col-lg-3 col-md-3 col-sm-6 col-xs-12">
+	  				<div class="form-group">
+					  <label for="credName">Nombre del simulador:</label>
+					  <input type="text" class="form-control" id="credName">
+					</div>
+		  			
+		  		</div>
+		  		
+		  		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		  			<div class="form-group">
+					  <label for="credCondition">Condición:</label>
+					  <textarea class="form-control" rows="5" id="credCondition"></textarea>
+					</div>
+		  			
+		  		</div>
+		  		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		  			<div class="form-group">
+					  <label for="credDestination">Destino:</label>
+					  <textarea class="form-control" rows="5" id="credDestination"></textarea>
+					</div>
+
+		  		</div>
+		  		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		  			<div class="form-group">
+					  <label for="credBenefits">Beneficios:</label>
+					  <textarea class="form-control" rows="5" id="credBenefits"></textarea>
+					</div>
+		  	
+		  		</div>
+			  </div>
+			  <div class="row">
+			  <select  style="display: none" id="listCondition" onchange="selectionList(this.value,0)" multiple></select>
+				  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+				  	
+				  	<div class="form-group">
+					  <label for="listMonthsStart">Meses de inicio:</label>
+					  <select class="form-control"id="listMonthsStart" onchange="selectionList(this.value,1)">
+					  </select>
+					</div>
+				  	
+				  </div>
+				  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+				  	
+				  	<div class="form-group">
+					  <label for="listMonthsEnd">Meses de fin:</label>
+					  <select class="form-control"id="listMonthsEnd" onchange="selectionList(this.value,1)">
+					  </select>
+					</div>
+				  	
+				  </div>
+				  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+				  	<div class="form-group">
+					  <label for="rateMonths">Interés mensual</label>
+					  <input type="text" class="form-control" id="rateMonths" onkeyup="mouseUpValidate(this.value,this.id)">
+					</div>
+				  </div>
+				   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+				  	<div class="form-group">
+					  <label for="rateYears">Interés anual</label>
+					  <input type="text" class="form-control" id="rateYears" onkeyup="mouseUpValidate(this.value,this.id)">
+					  <div class="checkbox">
+						  <label><input id="checkCalculateRate" type="checkbox" onClick="valueCheck()" value="0">Calcular</label>
+					   </div>
+					</div>
+				  </div>
+				   
+			  
+			</div>
+			<div class="row">
+				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4" style="text-align: center">
+					   <div class="form-group">
+						  <label for="butonAdd">Condiciones</label>
+						  <input type="button" id="butonAdd" title="Agregar condición"class="btn btn-success btn-md center-block" value="+" onClick="createConditionCredit()">
+						</div>
+				  </div>
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+					<div class="table-responsive">
+						<table id="SeletCondition" class="table table-hover">
+						<thead><tr><th>Término</th><th>Interés</th><th>NMV</th></tr></thead>
+						<tbody id="TableBody"></tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="text-align: center">
+					   <div class="form-group">
+						  <label for="Send"></label>
+						  <input type="button" id="Send" title="Crear simulador"class="btn btn-primary btn-md center-block" value="Enviar" onClick="validateInsertCredit()">
+						</div>
+				  </div>	
+			</div>
+	
+			</div>
+			<div class="modal-footer">
+			  <button type="button" title="Cerrar" class="btn btn-default btn-danger" data-dismiss="modal">Cerrar</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	<!-- End Modal -->
+</div>
+<!--End Container General-->
+</body>
+</html>

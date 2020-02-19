@@ -1,0 +1,146 @@
+/*CREATED BY DIEGO CASALLAS 
+ DATE : 7/18/2017*/
+DELIMITER //
+DROP PROCEDURE IF EXISTS select_usert//
+CREATE PROCEDURE select_usert(IN email  VARCHAR(200), IN password  VARCHAR(100))
+	BEGIN
+    	DECLARE validate INT;
+    	SET validate=(SELECT COUNT(*)FROM user WHERE user.userEmail=email AND user.userPassword=password);
+        IF(validate=1) THEN
+        	SELECT * FROM user WHERE user.userEmail=email AND user.userPassword=password;
+        ELSE 
+        	SELECT validate;
+        END IF;
+
+    END //
+DELIMITER ;
+
+/***************************/
+
+/*CREATED BY DIEGO CASALLAS 
+ DATE : 7/8/2017*/
+DELIMITER //
+DROP PROCEDURE IF EXISTS select_credit//
+CREATE PROCEDURE select_credit(IN dataSearch  VARCHAR(800), IN typeSelection INT)
+	BEGIN
+    	IF typeSelection=0 THEN
+    		SELECT * FROM credit WHERE credit.credName LIKE CONCAT('%',dataSearch,'%'); 
+        ELSEIF typeSelection=1 THEN
+        	SELECT COUNT(*) FROM credit WHERE credit.credName = dataSearch; 
+        END IF;
+    END //
+DELIMITER ;
+
+/*CREATED BY DIEGO CASALLAS 
+ DATE : 7/18/2017*/
+DELIMITER //
+DROP PROCEDURE IF EXISTS delete_credit//
+CREATE PROCEDURE delete_credit(IN credidId  INT)
+	BEGIN
+    	DECLARE validate INT;
+        
+    	
+        DELETE FROM loan_condition WHERE loan_condition.idCredit=credidId;
+        DELETE FROM credit WHERE credit.credId=credidId;
+      	SET validate=(SELECT COUNT(*)FROM loan_condition WHERE loan_condition.idCredit=credidId);
+        SELECT validate;
+
+    END //
+DELIMITER ;
+
+/*CREATED BY DIEGO CASALLAS 
+ DATE : 7/8/2017*/
+DELIMITER //
+DROP PROCEDURE IF EXISTS insertUpdate_credit//
+CREATE PROCEDURE insertUpdate_credit(IN credId INT,IN credName VARCHAR(800),IN credCondition VARCHAR(800),IN credDestination VARCHAR(800),IN credBenefits VARCHAR(800))
+     BEGIN 
+        IF credId=0 THEN 
+              INSERT INTO credit(credName, credCondition, credDestination, credBenefits) 
+              VALUES (credName,credCondition,credDestination,credBenefits); 
+               SELECT LAST_INSERT_ID() AS credId ;
+               
+      ELSE 
+      UPDATE credit 
+      SET credit.credName=credName, 
+       credit.credCondition=credCondition, 
+       credit.credDestination=credDestination, 
+       credit.credBenefits=credBenefits 
+       WHERE credit.credId=credId; 
+       SELECT credId AS credId ; 
+       DELETE FROM loan_condition WHERE loan_condition.idCredit=credId;
+      END IF; 
+  END //
+ DELIMITER ;
+ 
+ 
+/*CREATED BY DIEGO CASALLAS 
+ DATE : 7/8/2017*/
+DELIMITER //
+DROP PROCEDURE IF EXISTS update_credit//
+CREATE PROCEDURE update_credit(IN credit INT(3),IN credName VARCHAR(800),IN credCondition VARCHAR(800),IN credDestination VARCHAR(800),IN credBenefits VARCHAR(800))
+	BEGIN 
+    UPDATE credit 
+    SET credName=credName, credCondition=credCondition, credDestination=credDestination, credBenefits=credBenefits
+    WHERE credit.credit=credit ; 
+    END //
+DELIMITER ;
+/***************************/
+
+/*CREATED BY DIEGO CASALLAS 
+ DATE : 17/7/2017*/
+DELIMITER //
+DROP PROCEDURE IF EXISTS select_loan_condition//
+CREATE PROCEDURE select_loan_condition(IN credId INT)
+	BEGIN
+    	SELECT * FROM loan_condition WHERE idCredit=credId; 
+    END //
+DELIMITER ;
+
+/*CREATED BY DIEGO CASALLAS 
+ DATE : 7/8/2017*/
+DELIMITER //
+DROP PROCEDURE IF EXISTS update_loan_condition//
+CREATE PROCEDURE update_loan_condition(IN condId INT(3),IN condTerm VARCHAR(100),IN condRate VARCHAR(100),IN cond_NMV VARCHAR(100))
+	BEGIN 
+    UPDATE loan_condition 
+    SET condTerm=condTerm, condRate=condRate, cond_NMV=cond_NMV
+    WHERE loan_condition.condId=condId ; 
+    END //
+DELIMITER ;
+
+/*CREATED BY DIEGO CASALLAS 
+ DATE : 7/8/2017*/
+DELIMITER //
+DROP PROCEDURE IF EXISTS insertUpdate_condition//
+CREATE PROCEDURE insertUpdate_condition(IN id_credit INT, IN condTerm VARCHAR(100), IN condRate VARCHAR(100), IN cond_NMV VARCHAR(100)) 
+    BEGIN 
+    /*DECLARE validate INT; 
+    SET validate=(SELECT COUNT(*) FROM credit WHERE credit.credId=id_credit ); 
+    IF validate=0 THEN */
+    	
+      INSERT INTO loan_condition(condTerm,condRate,cond_NMV,idCredit)
+      VALUES(condTerm,condRate,cond_NMV,id_credit); 
+       
+    /*ELSE 
+        DELETE FROM loan_condition 
+        WHERE loan_condition.idCredit=id_credit;
+        
+       INSERT INTO loan_condition(condTerm,condRate,cond_NMV,idCredit)
+       VALUES(condTerm,condRate,cond_NMV,id_credit);
+    END IF;*/ 
+    END //
+DELIMITER ;
+
+/*CREATED BY DIEGO CASALLAS 
+ DATE : 7/8/2017*/
+DELIMITER //
+DROP PROCEDURE IF EXISTS insert_loan_condition//
+CREATE PROCEDURE insert_loan_condition(IN condTerm VARCHAR(100),IN condRate VARCHAR(100),IN cond_NMV VARCHAR(100))
+	BEGIN 
+    INSERT INTO loan_condition(condTerm, condRate, cond_NMV) 
+    VALUES (condTerm,condRate,cond_NMV);
+    END //
+DELIMITER ;
+
+
+/***************************/

@@ -9,10 +9,10 @@
     private $database;
 
     function __construct(){ 
-        $this->user="admin_sinapsis";
-        $this->password="Sinapsis2020*";
+        $this->user="root";
+        $this->password="";
         $this->server="localhost";
-        $this->database="admin_simulator";
+        $this->database="coominobras";
         }
         public function getUser()
         {

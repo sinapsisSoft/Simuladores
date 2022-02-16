@@ -23,11 +23,11 @@ function getDataSimulators(data) {
 		if (this.readyState === 4 && this.status === 200) {
 			if (data === 0) {
 				objCredit = JSON.parse(xhttp.responseText);
-        //console.log(xhttp.responseText);
+        console.log(xhttp.responseText);
 				createElementList();
 			} else if (data === 1) {
 				objCondition = JSON.parse(xhttp.responseText);
-				//console.log(objCondition);
+				console.log(objCondition);
 			}
 		} else {
 		}

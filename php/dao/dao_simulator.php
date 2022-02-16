@@ -44,7 +44,7 @@ class DaoSimulator
       $con = $this->objConntion->connect();
       $con->query("SET NAMES 'utf8'");
       if ($con != null) {        
-          if ($result = $con->query("CALL sp_simul_select_all()")) {         
+          if ($result = $con->query("CALL sp_credlines_select_all()")) {         
           while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             $this->arrayResult[] = $row;
           };                 

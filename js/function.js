@@ -23,11 +23,11 @@ function getDataSimulators(data) {
 		if (this.readyState === 4 && this.status === 200) {
 			if (data === 0) {
 				objCredit = JSON.parse(xhttp.responseText);
-        console.log(xhttp.responseText);
+        //console.log(xhttp.responseText);
 				createElementList();
 			} else if (data === 1) {
 				objCondition = JSON.parse(xhttp.responseText);
-				console.log(objCondition);
+				//console.log(objCondition);
 			}
 		} else {
 		}
@@ -42,8 +42,8 @@ function createElementList() {
 	let aux = document.getElementsByClassName("nice-select")[0];
 	let option2 = '<span class="current">Seleccione crédito</span><ul class="list"><li data-value="0" class="option selected focus">Seleccione crédito</li>';
 	for (var i = 0; i < objCredit.length; i++) {
-		option += "<option value='" + objCredit[i].Sim_id + "'>" + objCredit[i].Sim_name + "</option>";
-		option2 += '<li data-value="' + objCredit[i].Sim_id + '" class="option">' + objCredit[i].Sim_name + '</li>';
+		option += "<option value='" + objCredit[i].creL_id + "'>" + objCredit[i].creL_name + "</option>";
+		option2 += '<li data-value="' + objCredit[i].creL_id + '" class="option">' + objCredit[i].creL_name + '</li>';
 	}
 	option2 += '</ul>';
 	selectCredit.innerHTML = option;
@@ -59,13 +59,12 @@ function selectItems(data) {
 		var maxMin = sectionMaxMin(data);
 		//console.log(maxMin);
 		for (var i = 0; i < objCredit.length; i++) {
-			if (objCredit[i].Sim_id === data) {
+			if (objCredit[i].creL_id === data) {
 				
-				
-				document.getElementById('destination').innerHTML = "<p>" + objCredit[i].Sim_destination + "</p>";
-				document.getElementById('conditions').innerHTML = "<p>" + objCredit[i].Sim_conditions + "</p>";
-				document.getElementById('benefits').innerHTML = "<p>" + objCredit[i].Sim_benefits + "</p>";
-				titleLine = objCredit[i].Sim_name;
+				document.getElementById('destination').innerHTML = "<p>" + objCredit[i].creL_destination + "</p>";
+				document.getElementById('conditions').innerHTML = "<p>" + objCredit[i].creL_conditions + "</p>";
+				document.getElementById('benefits').innerHTML = "<p>" + objCredit[i].creL_benefits + "</p>";
+				titleLine = objCredit[i].creL_name;
 				document.getElementById("titleLine").innerHTML = "<span class='d-block'>" + titleLine + "</span>";
 				cleanElementsNewline();
 				createSelect(maxMin[1], maxMin[0]);
@@ -82,7 +81,7 @@ function sectionMaxMin(data) {
 	var arrayMaxMin = new Array();
 	var aux = new Array();
 	for (var i = 0; i < objCondition.length; i++) {
-		if (objCondition[i].Sim_id === data) {
+		if (objCondition[i].creL_id === data) {
 			arrayTerm.push(objCondition[i]);
 		}
 	}

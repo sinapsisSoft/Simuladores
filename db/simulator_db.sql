@@ -80,29 +80,6 @@ INSERT INTO `conditions` (`Cond_id`, `Cond_initial`, `Cond_final`, `Cond_percent
 (20, 7, 12, '0.90', 11, 2),
 (21, 13, 36, '1.00', 13, 2);
 
-DELIMITER //
-DROP PROCEDURE IF EXISTS sp_simul_select_all //
-CREATE PROCEDURE sp_simul_select_all ()
-BEGIN 
-  SELECT creL_id, creL_name,creL_conditions,creL_benefits,creL_destination FROM creditlines;
-END //
-
-DELIMITER //
-DROP PROCEDURE IF EXISTS sp_simul_insert //
-CREATE PROCEDURE sp_simul_insert
-(IN name VARCHAR(80),
-IN conditions VARCHAR(200), 
-IN benefits VARCHAR(200), 
-IN destination VARCHAR(200), 
-IN initial INT, 
-IN final INT, 
-IN percent DECIMAL(4,2))
-BEGIN 
-  INSERT INTO creditlines(creL_name, creL_conditions, creL_benefits,creL_destination) VALUES (name, conditions,benefits,destination); 
-  SET @id = LAST_INSERT_ID(); 
-  INSERT INTO conditions(Cond_initial,Cond_final,Cond_percent,creL_id) VALUES (initial,final,percent,@id);
-  SELECT ROW_COUNT();
-END //
 
 DELIMITER //
 DROP PROCEDURE IF EXISTS sp_cond_insert //
@@ -142,6 +119,7 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS sp_credlines_insert //
 CREATE PROCEDURE sp_credlines_insert
 (IN name VARCHAR(80),
+IN descriptions VARCHAR(200), 
 IN conditions VARCHAR(200), 
 IN benefits VARCHAR(200), 
 IN destination VARCHAR(200), 
@@ -149,7 +127,7 @@ IN initial INT,
 IN final INT, 
 IN percent DECIMAL(4,2))
 BEGIN 
-  INSERT INTO creditlines(creL_name, creL_conditions, creL_benefits,creL_destination) VALUES (name, conditions,benefits,destination); 
+  INSERT INTO creditlines(creL_name, creL_descriptions, creL_conditions, creL_benefits,creL_destination) VALUES (name, conditions,benefits,destination); 
   SET @id = LAST_INSERT_ID(); 
   INSERT INTO conditions(Cond_initial,Cond_final,Cond_percent,creL_id) VALUES (initial,final,percent,@id);
   SELECT ROW_COUNT();

@@ -12,7 +12,7 @@
         $this->user="root";
         $this->password="";
         $this->server="localhost";
-        $this->database="coominobras";
+        $this->database="simulator";
         }
         public function getUser()
         {

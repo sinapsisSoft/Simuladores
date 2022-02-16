@@ -41,7 +41,7 @@ ALTER TABLE `conditions`
 -- Volcado de datos para la tabla `creditLines`
 --
 
-INSERT INTO `creditLines` (`creL_id`, `creL_name`, `creL_conditions`, `creL_benefits`, `creL_destination`) VALUES
+INSERT INTO `creditLines` (`creL_id`, `creL_name`, `creL_descriptions`,`creL_conditions`, `creL_benefits`, `creL_destination`) VALUES
 (1, 'TARJETA TAVA (ROTATIVO)', 'test','test', 'test', 'test'),
 (2, 'EDUCACION', 'test', 'test','test', 'test'),
 (3, 'SOBRE APORTES', 'test', 'test','test', 'test'),

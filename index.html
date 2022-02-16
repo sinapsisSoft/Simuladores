@@ -218,14 +218,8 @@
 // ========================================================================= //
 // Back Top Link
 // ========================================================================= //
-$(document).ready(function () {
-  obj = "select=select";
-  getDataSimulators(0);
-  obj = "selectCondition=selectCondition";
-  getDataSimulators(1);
-  cleanTable();
-  validaSection(1);
-});
+
+window.onload=loadView();
 var offset = 200;
 var duration = 500;
 $(window).scroll(function () {

@@ -1,4 +1,6 @@
-// JavaScript Document
+// Author:DIEGO CASALLAS
+// Descriptions: Funtions aplications
+// Date:16/02/2022
 
 var itemSelectLine = 0;
 var selectList;
@@ -12,9 +14,18 @@ var objCredit;
 var objCondition;
 var obj;
 var arrayTerm;
+//Function load view page
+function loadView() {
+	obj = "select=select";
+	getDataSimulators(0);
+	obj = "selectCondition=selectCondition";
+	getDataSimulators(1);
+	cleanTable();
+	validaSection(1);
+}
+
 //Function get data data base
 function getDataSimulators(data) {
-
 	//console.log(obj);
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST", "php/bo/bo_simulator.php", true);
@@ -23,7 +34,7 @@ function getDataSimulators(data) {
 		if (this.readyState === 4 && this.status === 200) {
 			if (data === 0) {
 				objCredit = JSON.parse(xhttp.responseText);
-        //console.log(xhttp.responseText);
+				//console.log(xhttp.responseText);
 				createElementList();
 			} else if (data === 1) {
 				objCondition = JSON.parse(xhttp.responseText);
@@ -60,7 +71,7 @@ function selectItems(data) {
 		//console.log(maxMin);
 		for (var i = 0; i < objCredit.length; i++) {
 			if (objCredit[i].creL_id === data) {
-				
+
 				document.getElementById('destination').innerHTML = "<p>" + objCredit[i].creL_destination + "</p>";
 				document.getElementById('conditions').innerHTML = "<p>" + objCredit[i].creL_conditions + "</p>";
 				document.getElementById('benefits').innerHTML = "<p>" + objCredit[i].creL_benefits + "</p>";
@@ -184,7 +195,6 @@ function validateText(id) {
 }
 //Function calculate
 function calculate(e) {
-
 	var dataRate = 1;
 	varEvent = e;
 	var lineCredit = document.getElementById("credit-line");
@@ -264,8 +274,6 @@ function createTableAmortization(idTable, term, rate, rode) {
 	rate = parseFloat(rate * 100).toFixed(2);
 
 	var textInfo = "<ul class='listInfoTable'><li><span><b> Línea de crédito: </b></span> " + titleLine + " </li><li> <span> <b>Plazo:</b></span> " + term + " Meses </li><li> <span> <b>Tasa de Interés:</b></span> " + rate + " %</li><li><span> <b>Valor de la cuota aproximado :</b></span> $" + numberWithCommas(ressult.toFixed(0)) + "</li><li><span><b> Valor Solicitado:</b></span> $" + numberWithCommas(rode) + "</li><li><span><b> Los valores aquí mostrados son aproximados, por lo tanto, pueden variar.</b></span></li></ul>";
-
-
 
 	$(".detail").html(textInfo);
 

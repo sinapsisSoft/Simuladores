@@ -24,6 +24,7 @@ DROP TABLE IF EXISTS `creditLines`;
 CREATE TABLE IF NOT EXISTS `creditLines` (
   `creL_id` int(11) NOT NULL AUTO_INCREMENT,
   `creL_name` varchar(80) CHARACTER SET utf8 NOT NULL,
+  `creL_descriptions` varchar(800) COLLATE utf8_unicode_ci NOT NULL,
   `creL_conditions` varchar(800) COLLATE utf8_unicode_ci NOT NULL,
   `creL_benefits` varchar(800) COLLATE utf8_unicode_ci NOT NULL,
   `creL_destination` varchar(800) COLLATE utf8_unicode_ci NOT NULL,
@@ -41,17 +42,17 @@ ALTER TABLE `conditions`
 --
 
 INSERT INTO `creditLines` (`creL_id`, `creL_name`, `creL_conditions`, `creL_benefits`, `creL_destination`) VALUES
-(1, 'TARJETA TAVA (ROTATIVO)', 'test', 'test', 'test'),
-(2, 'EDUCACION', 'test', 'test', 'test'),
-(3, 'SOBRE APORTES', 'test', 'test', 'test'),
-(4, 'SOBREPRIMA', 'test', 'test', 'test'),
-(5, 'FIDELIDAD', 'test', 'test', 'test'),
-(6, 'COMPRAS', 'test', 'test', 'test'),
-(7, 'COMPRA DE CARTERA', 'test', 'test', 'test'),
-(8, 'CREDI YA', 'test', 'test', 'test'),
-(9, 'ORDINARIO', 'test', 'test', 'test'),
-(10, 'PROMOCIONAL', 'test', 'test', 'test'),
-(11, 'TURISMO', 'test', 'test', 'test');
+(1, 'TARJETA TAVA (ROTATIVO)', 'test','test', 'test', 'test'),
+(2, 'EDUCACION', 'test', 'test','test', 'test'),
+(3, 'SOBRE APORTES', 'test', 'test','test', 'test'),
+(4, 'SOBREPRIMA', 'test', 'test', 'test','test'),
+(5, 'FIDELIDAD', 'test', 'test', 'test','test'),
+(6, 'COMPRAS', 'test', 'test', 'test','test'),
+(7, 'COMPRA DE CARTERA', 'test', 'test','test', 'test'),
+(8, 'CREDI YA', 'test', 'test', 'test','test'),
+(9, 'ORDINARIO', 'test', 'test', 'test','test'),
+(10, 'PROMOCIONAL', 'test', 'test','test', 'test'),
+(11, 'TURISMO', 'test', 'test', 'test','test');
 
 --
 -- Volcado de datos para la tabla `conditions`
@@ -127,7 +128,7 @@ IN initial INT,
 IN final INT, 
 IN percent DECIMAL(4,2))
 BEGIN 
-  INSERT INTO creditlines(creL_name, creL_descriptions, creL_conditions, creL_benefits,creL_destination) VALUES (name, conditions,benefits,destination); 
+  INSERT INTO creditlines(creL_name, creL_descriptions, creL_conditions, creL_benefits,creL_destination) VALUES (name,descriptions, conditions,benefits,destination); 
   SET @id = LAST_INSERT_ID(); 
   INSERT INTO conditions(Cond_initial,Cond_final,Cond_percent,creL_id) VALUES (initial,final,percent,@id);
   SELECT ROW_COUNT();
@@ -139,11 +140,12 @@ DROP PROCEDURE IF EXISTS sp_credlines_update //
 CREATE PROCEDURE sp_credlines_update 
 (IN id INT, 
 IN name VARCHAR(80),
+IN descriptions VARCHAR(200), 
 IN conditions VARCHAR(200), 
 IN benefits VARCHAR(200), 
 IN destination VARCHAR(200)) 
 BEGIN 
-  UPDATE creditlines SET creL_name=name,creL_conditions=conditions,creL_benefits=benefits,creL_destination=destination WHERE creL_id = id;
+  UPDATE creditlines SET creL_name=name,creL_descriptions=descriptions,creL_conditions=conditions,creL_benefits=benefits,creL_destination=destination WHERE creL_id = id;
   SELECT ROW_COUNT(); 
 END //
 
@@ -151,7 +153,7 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS sp_credlines_select_all //
 CREATE PROCEDURE sp_credlines_select_all ()
 BEGIN 
-  SELECT creL_id, creL_name,creL_conditions,creL_benefits,creL_destination FROM creditlines;
+  SELECT creL_id, creL_name,creL_descriptions,creL_conditions,creL_conditions,creL_benefits,creL_destination FROM creditlines;
 END //
 
 DELIMITER //
@@ -159,5 +161,5 @@ DROP PROCEDURE IF EXISTS sp_simul_select_one //
 CREATE PROCEDURE sp_simul_select_one 
 (IN id INT) 
 BEGIN 
-  SELECT creL_id, creL_name, creL_conditions,creL_benefits,creL_destination  FROM creditlines WHERE creL_id = id;
+  SELECT creL_id, creL_name, creL_descriptions,creL_conditions,creL_benefits,creL_destination  FROM creditlines WHERE creL_id = id;
 END //

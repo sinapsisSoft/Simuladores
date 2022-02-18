@@ -15,11 +15,9 @@ CREATE TABLE IF NOT EXISTS `conditions` (
   PRIMARY KEY (`Cond_id`),
   KEY `Conditions_CreditLines` (`creL_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Estructura de tabla para la tabla CreditLines`
 --
-
 DROP TABLE IF EXISTS `creditLines`;
 CREATE TABLE IF NOT EXISTS `creditLines` (
   `creL_id` int(11) NOT NULL AUTO_INCREMENT,

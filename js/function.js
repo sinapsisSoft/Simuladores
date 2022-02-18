@@ -16,9 +16,9 @@ var obj;
 var arrayTerm;
 //Function load view page
 function loadView() {
-	obj = "select=select";
+	obj = "GET = GET_SIMULATOR";
 	getDataSimulators(0);
-	obj = "selectCondition=selectCondition";
+	obj = "GET = GET_CONDITIONS";
 	getDataSimulators(1);
 	cleanTable();
 	validaSection(1);
@@ -26,19 +26,16 @@ function loadView() {
 
 //Function get data data base
 function getDataSimulators(data) {
-	//console.log(obj);
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("POST", "php/bo/bo_simulator.php", true);
+	xhttp.open("POST", ajaxSimulator, true);
 	xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4 && this.status === 200) {
 			if (data === 0) {
 				objCredit = JSON.parse(xhttp.responseText);
-				//console.log(xhttp.responseText);
 				createElementList();
 			} else if (data === 1) {
 				objCondition = JSON.parse(xhttp.responseText);
-				//console.log(objCondition);
 			}
 		} else {
 		}

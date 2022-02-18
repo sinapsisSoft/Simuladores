@@ -4,6 +4,9 @@
 #Description : Is BO Simulator
 include "../dto/dto_simulator.php";
 include "../dao/dao_simulator.php";
+header("Content-type: application/json; charset=utf-8");
+header("Access-Control-Allow-Origin: https://coominobras.coop");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Access-Control-Allow-Origin, X-Requested-With");
 
 class BoSimulator
 {
@@ -86,12 +89,24 @@ class BoSimulator
 
 }
 $obj = new BoSimulator();
-if(isset ($_POST['select'])){
+/// We get the json sent
+$getData = file_get_contents('php://input');
+$data = json_decode($getData);
 
-  $obj->selectSimulators();
-} else if (isset ($_POST['selectCondition'])){
-
-  $obj->selectConditions();
+/**********CREATE ************/
+if(isset($data->POST)){
+  if ($data->POST == "") {
+    
+  }
+}
+/**********READ AND CONSULT ************/
+if (isset($data->GET)) {
+  if ($data->GET == "GET_SIMULATOR") {
+    echo $obj->selectSimulators();
+  }
+  else if($data->GET == "GET_CONDITIONS"){
+    echo $obj->selectConditions();
+  }
 }
 
 ?>

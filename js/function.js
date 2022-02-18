@@ -16,9 +16,9 @@ var obj;
 var arrayTerm;
 //Function load view page
 function loadView() {
-	obj = "GET = GET_SIMULATOR";
+	obj = '{"GET":"GET_SIMULATOR"}';
 	getDataSimulators(0);
-	obj = "GET = GET_CONDITIONS";
+	obj = '{"GET":"GET_CONDITIONS"}';
 	getDataSimulators(1);
 	cleanTable();
 	validaSection(1);
@@ -61,11 +61,9 @@ function createElementList() {
 //Function select list credit line
 function selectItems(data) {
 	itemSelectLine = data;
-	//console.log(data);
 	if (data != 0) {
 		dataRode = document.getElementById("rode");
 		var maxMin = sectionMaxMin(data);
-		//console.log(maxMin);
 		for (var i = 0; i < objCredit.length; i++) {
 			if (objCredit[i].creL_id === data) {
 
@@ -136,12 +134,10 @@ function selectRate(select) {
 	for (var i = 0; i < arrayTerm.length; i++) {
 		aMaxMin[0] = arrayTerm[i].Cond_initial;
 		aMaxMin[1] = arrayTerm[i].Cond_final;
-		//console.log(aMaxMin);
 		if ((select >= parseInt(aMaxMin[0])) && (select <= parseInt(aMaxMin[1]))) {
 			rate = arrayTerm[i].Cond_percent;
 		}
 	}
-	//console.log(rate);
 	return rate;
 }
 
@@ -191,11 +187,12 @@ function validateText(id) {
 	}
 }
 //Function calculate
-function calculate(e) {
-	var dataRate = 1;
+function calculate(e) {  
 	varEvent = e;
 	var lineCredit = document.getElementById("credit-line");
 	selectWeek = document.getElementById("term");
+  var valueRate = selectWeek.options[selectWeek.selectedIndex].value;
+  var dataRate = selectRate(valueRate);
 	var selectlineCredit = lineCredit.options[lineCredit.selectedIndex].value;
 	if (selectlineCredit == 0) {
 		modalAlert(0);

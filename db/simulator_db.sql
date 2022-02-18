@@ -126,7 +126,7 @@ IN initial INT,
 IN final INT, 
 IN percent DECIMAL(4,2))
 BEGIN 
-  INSERT INTO creditlines(creL_name, creL_descriptions, creL_conditions, creL_benefits,creL_destination) VALUES (name,descriptions, conditions,benefits,destination); 
+  INSERT INTO creditLines(creL_name, creL_descriptions, creL_conditions, creL_benefits,creL_destination) VALUES (name,descriptions, conditions,benefits,destination); 
   SET @id = LAST_INSERT_ID(); 
   INSERT INTO conditions(Cond_initial,Cond_final,Cond_percent,creL_id) VALUES (initial,final,percent,@id);
   SELECT ROW_COUNT();
@@ -143,7 +143,7 @@ IN conditions VARCHAR(200),
 IN benefits VARCHAR(200), 
 IN destination VARCHAR(200)) 
 BEGIN 
-  UPDATE creditlines SET creL_name=name,creL_descriptions=descriptions,creL_conditions=conditions,creL_benefits=benefits,creL_destination=destination WHERE creL_id = id;
+  UPDATE creditLines SET creL_name=name,creL_descriptions=descriptions,creL_conditions=conditions,creL_benefits=benefits,creL_destination=destination WHERE creL_id = id;
   SELECT ROW_COUNT(); 
 END //
 
@@ -151,7 +151,7 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS sp_credlines_select_all //
 CREATE PROCEDURE sp_credlines_select_all ()
 BEGIN 
-  SELECT creL_id, creL_name,creL_descriptions,creL_conditions,creL_conditions,creL_benefits,creL_destination FROM creditlines;
+  SELECT creL_id, creL_name,creL_descriptions,creL_conditions,creL_conditions,creL_benefits,creL_destination FROM creditLines;
 END //
 
 DELIMITER //
@@ -159,5 +159,5 @@ DROP PROCEDURE IF EXISTS sp_simul_select_one //
 CREATE PROCEDURE sp_simul_select_one 
 (IN id INT) 
 BEGIN 
-  SELECT creL_id, creL_name, creL_descriptions,creL_conditions,creL_benefits,creL_destination  FROM creditlines WHERE creL_id = id;
+  SELECT creL_id, creL_name, creL_descriptions,creL_conditions,creL_benefits,creL_destination  FROM creditLines WHERE creL_id = id;
 END //

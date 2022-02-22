@@ -107,6 +107,9 @@ if (isset($data->GET)) {
   else if($data->GET == "GET_CONDITIONS"){
     echo $obj->selectConditions();
   }
+  else if($data->GET == "GET_ONE"){
+    echo $obj->selectSimulator($data->creL_id);
+  }
 }
 
 ?>

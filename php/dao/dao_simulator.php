@@ -65,6 +65,7 @@ class DaoSimulator
     try {
       $con = $this->objConntion->connect();
       if ($con != null) {
+        echo "CALL sp_simul_select_one(". $dataId . ")";
         if ($result = $con->query("CALL sp_simul_select_one(". $dataId . ")")) {
           while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             $this->arrayResult[] = $row;

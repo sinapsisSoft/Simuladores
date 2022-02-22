@@ -155,8 +155,8 @@ BEGIN
 END //
 
 DELIMITER //
-DROP PROCEDURE IF EXISTS sp_simul_select_one //
-CREATE PROCEDURE sp_simul_select_one 
+DROP PROCEDURE IF EXISTS sp_credlines_select_one //
+CREATE PROCEDURE sp_credlines_select_one 
 (IN id INT) 
 BEGIN 
   SELECT creL_id, creL_name, creL_descriptions,creL_conditions,creL_benefits,creL_destination  FROM creditLines WHERE creL_id = id;

@@ -267,7 +267,7 @@ function createTableAmortization(idTable, term, rate, rode) {
 	table.innerHTML = newTable;
 	rate = parseFloat(rate * 100).toFixed(2);
 
-	var textInfo = "<ul class='listInfoTable'><li><span><b> Línea de crédito: </b></span> " + titleLine + " </li><li> <span> <b>Plazo:</b></span> " + term + " Meses </li><li> <span> <b>Tasa de Interés:</b></span> " + rate + " %</li><li><span> <b>Valor de la cuota aproximado :</b></span> $" + numberWithCommas(ressult.toFixed(0)) + "</li><li><span><b> Valor Solicitado:</b></span> $" + numberWithCommas(rode) + "</li><li><span><b> Los valores aquí mostrados son aproximados, por lo tanto, pueden variar.</b></span></li></ul>";
+	var textInfo = "<ul class='listInfoTable'><li><span><b> Línea de crédito: </b></span> " + titleLine + " </li><li> <span> <b>Plazo:</b></span> " + term + " Meses </li><li> <span> <b>Tasa de Interés:</b></span> " + rate + " %</li><li><span> <b>Valor de la cuota aproximado :</b></span> $" + numberWithCommas(ressult.toFixed(0)) + "</li><li><span><b> Valor Solicitado:</b></span> $" + numberWithCommas(rode) + "</li><li><span><b> El monto esta sujeto a cupo aprobado. Este es un simulador de crédito y no constituye compromiso de otorgamiento de crédito para lo cual se deberá realizar el estudio de la solicitud de crédito con las políticas de la cooperativa.</br>Algunas condiciones de crédito podrán varias sin previo aviso.</b></span></li></ul>";
 
 	$(".detail").html(textInfo);
 
